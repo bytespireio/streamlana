@@ -1,7 +1,9 @@
 # StreamLana
-Streamlit in Grafana style ...
 
-## Goal 
+'*Business Intelligence as Configuration*' 🚀
 
-Enabling '*Business Intelligence as Configuration*' 🚀
+Think of Streamlit in Grafana style!
+
+
+
 
