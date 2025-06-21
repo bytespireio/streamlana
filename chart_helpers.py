@@ -345,3 +345,67 @@ def render_image(df, config_dict: dict):
         output_format=config_dict.get("output_format", "auto"),
         use_container_width=config_dict.get("use_container_width", False),
     )
+
+
+def render_line_chart(data, config_dict):
+    """
+    Render a line chart using Streamlit's st.line_chart with configuration parameters.
+
+    Parameters:
+    - data (pd.DataFrame): The data to plot.
+    - config_dict (dict): Configuration dictionary containing:
+        - x (str or None): Column name for x-axis (must be in data). If None, index is used.
+        - y (str, list of str, or None): Column(s) for y-axis. If None, all columns except x are used.
+        - title (str): Optional title to display above the chart.
+        - width (int): Width of the chart. 0 means default.
+        - height (int): Height of the chart. 0 means default.
+        - use_container_width (bool): Whether to use the full container width.
+    """
+    logging.info("Rendering line chart with configuration: %s", config_dict)
+    x = config_dict.get("x")
+    y = config_dict.get("y")
+    title = config_dict.get("title")
+    width = config_dict.get("width", 0)
+    height = config_dict.get("height", 0)
+    use_container_width = config_dict.get("use_container_width", True)
+
+    __render_line_chart(
+        data,
+        x=x,
+        y=y,
+        title=title,
+        width=width,
+        height=height,
+        use_container_width=use_container_width,
+    )
+
+
+def __render_line_chart(
+    data, x=None, y=None, title=None, width=0, height=0, use_container_width=True
+):
+    """
+    Render a line chart using Streamlit's st.line_chart.
+
+    Parameters:
+    - data (pd.DataFrame): The data to plot.
+    - x (str or None): Column name to use as x-axis (must be in data). If None, index is used.
+    - y (str, list of str, or None): Column(s) to plot on y-axis. If None, all columns except x are used.
+    - title (str): Optional title to display above the chart.
+    - width (int): Width of the chart. 0 means default.
+    - height (int): Height of the chart. 0 means default.
+    - use_container_width (bool): Whether to use the full container width.
+    """
+    if title:
+        st.subheader(title)
+
+    if x:
+        if y:
+            plot_data = data[[x] + ([y] if isinstance(y, str) else y)].set_index(x)
+        else:
+            plot_data = data.set_index(x)
+    else:
+        plot_data = data if y is None else data[y]
+
+    st.line_chart(
+        plot_data, width=width, height=height, use_container_width=use_container_width
+    )

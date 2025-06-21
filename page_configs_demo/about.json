@@ -1,0 +1,9 @@
+{
+    "page_title": "About StreamLana",
+    "page_rows": [
+        {
+            "widgets_width_spec": [1],
+            "widgets": [{"type": "title", "config": {"body": "Business Intelligence as Configuration"}}]
+        }
+    ]
+}

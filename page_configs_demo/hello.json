@@ -1,0 +1,38 @@
+{
+    "page_title": "Hello StreamLana",
+    "page_rows": [
+        {
+            "widgets_width_spec": [
+                0.4,0.6
+            ],
+            "widgets_border": true,
+            "with_expander": {
+                "label": "2 widgets in 1st row, 40/60% width",
+                "expanded": true
+            },
+            "widgets_gap": "small",
+            "widgets_vertical_alignment": "top",
+            "widgets": [
+              {
+                    "type": "dataframe",
+                    "query": "SELECT avg_spend,order_date FROM (SELECT order_date, RANDOM() * 1000 AS avg_spend FROM generate_series(CURRENT_DATE - INTERVAL 30 DAY, CURRENT_DATE, INTERVAL 1 DAY) AS t(order_date)) as sub",
+                    "config": {
+                        "column_order": [
+                            "avg_spend",
+                            "order_date"
+                        ]
+                    }
+                },
+                {
+                    "type": "line_chart",
+                    "query": "SELECT avg_spend,order_date FROM (SELECT order_date, RANDOM() * 1000 AS avg_spend FROM generate_series(CURRENT_DATE - INTERVAL 30 DAY, CURRENT_DATE, INTERVAL 1 DAY) AS t(order_date)) as sub",
+                    "config": {
+                        "x": "order_date",
+                        "y": ["avg_spend"],
+                        "title": "avgSpend Over Time"
+                    }
+                }
+            ]
+        }
+    ]
+}
