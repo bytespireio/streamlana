@@ -89,7 +89,7 @@ Lets keep this simple 1 widget and 1 row -> **`page_configs_demo/about.json`**
     ]
 }
 ```
-4. few lines of code for the main app ->  **`hello.py`**
+5. Few lines of code for the main app ->  **`hello.py`**
 ```python
 #hello.py
 import logging
@@ -114,7 +114,7 @@ render_side_bar_pages(side_bar_config, con)
 
 ```
 
-5. Run the app
+6. Run the app
 ```bash
 streamlit run hello.py
 ```
