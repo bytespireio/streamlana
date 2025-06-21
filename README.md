@@ -2,7 +2,7 @@
 
 '*Business Intelligence as Configuration*' 🚀
 
-Think of Streamlit in Grafana style!
+Think of Streamlit in Grafana style...
 
 
 

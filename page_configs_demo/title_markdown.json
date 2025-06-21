@@ -1,0 +1,81 @@
+{
+    "page_title": "",
+    "page_rows": [
+        {
+            "widgets_width_spec": [1],
+            "widgets_border": false,
+            "with_expander": null,
+            "widgets_gap": "small",
+            "widgets_vertical_alignment": "top",
+            "widgets": [
+                {
+                    "type": "title",
+                    "config": {
+                        "note": "the configuration keys are same as st.title. Also page_title can be left blank if u choose this widget",
+                        "body": "Streamlana: Business Intelligence as Configuration",
+                        "help": "Streamlana is a configuration based framework to build Business Intelligence applications with minimal code. It is built on top of Streamlit and provides a set of widgets that can be configured to create complex BI applications without writing any code.",
+                        "anchor": null,
+                        "width" : "content"
+                    }
+                }
+            ]
+        },
+         {
+            "widgets_width_spec": [1],
+            "widgets_border": true,
+            "with_expander": {
+                "label": "The configuration for the above Row...",
+                "expanded": false
+            },
+            "widgets_gap": "small",
+            "widgets_vertical_alignment": "top",
+            "widgets": [
+                {
+                    "type": "json",
+                    "config": {
+                        "expanded": true,
+                        "note": "the configuration keys are same as st.json",
+                        "body": "{\n            \"widgets_width_spec\": [1],\n            \"widgets_border\": false,\n            \"with_expander\": null,\n            \"widgets_gap\": \"small\",\n            \"widgets_vertical_alignment\": \"top\",\n            \"widgets\": [\n                {\n                    \"type\": \"title\",\n                    \"config\": {\n                        \"note\": \"the configuration keys are same as st.title. Also page_title can be left blank if u choose this widget\",\n                        \"body\": \"Streamlana: Business Intelligence as Configuration\",\n                        \"help\": \"Streamlana is a configuration based framework to build Business Intelligence applications with minimal code. It is built on top of Streamlit and provides a set of widgets that can be configured to create complex BI applications without writing any code.\",\n                        \"anchor\": null,\n                        \"width\" : \"content\"\n                    }\n                }\n            ]\n        }"
+                    }
+                }
+            ]
+        },
+        {
+            "widgets_width_spec": [
+                1
+            ],
+            "widgets_border": false,
+            "with_expander": null,
+            "widgets_gap": "small",
+            "widgets_vertical_alignment": "top",
+            "widgets": [
+                {
+                    "type": "markdown",
+                    "config": {
+                        "body": "This is markdown: refer [github](https://github.com/bytespireio)"
+                    }
+                }
+            ]
+        },
+        {
+            "widgets_width_spec": [
+                1
+            ],
+            "widgets_border": true,
+            "with_expander": {
+                "label": "The Full Configuration for this entire page...",
+                "expanded": false
+            },
+            "widgets_gap": "small",
+            "widgets_vertical_alignment": "top",
+            "widgets": [
+                {
+                    "type": "markdown",
+                    "config": {
+                        "body": "refer [github](https://github.com/bytespireio/streamlana/blob/main/LICENSE)"
+                    }
+                }
+            ]
+        }
+    ]
+}

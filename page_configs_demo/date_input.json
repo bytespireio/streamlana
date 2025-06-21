@@ -1,0 +1,112 @@
+{
+    "page_title": "Date Input (mostly used as a filter)",
+    "page_rows": [
+        {
+            "widgets_width_spec": [1],
+            "note": "widget spec of 1 = 100% width",
+            "widgets_border": false,
+            "with_expander": null,
+            "widgets_gap": "small",
+            "widgets_vertical_alignment": "top",
+            "widgets": [
+                {
+                    "widget_enabled" : true,
+                    "type": "date_input",
+                    "config": {
+                        "label": "Today-7  to  Today, tz = Alaska",
+                        "value" : ["today-7", "today"],
+                        "min_value": "today-30",
+                        "max_value": "today+1",
+                        "start_date_column": "starting_date",
+                        "end_date_column": "ending_date",
+                        "timezone": "America/Anchorage",
+                        "note": "Other widgets can have sql using start/end date as filters: 'select ... where __starting_date__ >= '2023-12-02' and __ending_date__ <= '2023-12-03' "
+                    }
+                }
+            ]
+        },
+        {
+            "widgets_width_spec": [
+                1
+            ],
+            "widgets_border": true,
+            "with_expander": {
+                "label": "The configuration for the above row... using json widget",
+                "expanded": false
+            },
+            "widgets_gap": "small",
+            "widgets_vertical_alignment": "top",
+            "widgets": [
+                {
+                    "type": "json",
+                    "config": {
+                        "expanded": true,
+                        "note": "the configuration keys are same as st.json",
+                        "body": "{\n            \"widgets_width_spec\": [1],\n            \"note\": \"widget spec of 1 = 100% width\",\n            \"widgets_border\": false,\n            \"with_expander\": null,\n            \"widgets_gap\": \"small\",\n            \"widgets_vertical_alignment\": \"top\",\n            \"widgets\": [\n                {\n                    \"widget_enabled\" : true,\n                    \"type\": \"date_input\",\n                    \"config\": {\n                        \"label\": \"Today-7  to  Today, tz = Alaska\",\n                        \"value\" : [\"today-7\", \"today\"],\n                        \"min_value\": \"today-30\",\n                        \"max_value\": \"today+1\",\n                        \"start_date_column\": \"starting_date\",\n                        \"end_date_column\": \"ending_date\",\n                        \"timezone\": \"America/Anchorage\",\n                        \"note\": \"Other widgets can have sql using start/end date as filters: 'select ... where __starting_date__ >= '2023-12-02' and __ending_date__ <= '2023-12-03' \"\n                    }\n                }\n            ]\n        }"
+                    }
+                }
+            ]
+        },
+        {
+            "widgets_width_spec": [
+                1
+            ],
+            "widgets_border": true,
+            "with_expander": {
+                "label": "Dataframe Widget with Sql using the Date input widget values as filters",
+                "expanded": true
+            },
+            "widgets_gap": "small",
+            "widgets_vertical_alignment": "top",
+            "widgets": [
+                {
+                    "widget_enabled" : true,
+                    "type": "dataframe",
+                    "query": "SELECT order_date,avg_spend FROM (SELECT order_date, RANDOM() * 1000 AS avg_spend FROM generate_series(CURRENT_DATE - INTERVAL 30 DAY, CURRENT_DATE, INTERVAL 1 DAY) AS t(order_date)) as sub WHERE order_date <= '__ending_date__' and order_date >= '__starting_date__'",
+                    "config": {
+                    }
+                }
+            ]
+        },
+         {
+            "widgets_width_spec": [1],
+            "widgets_border": true,
+            "with_expander": {
+                "label": "The configuration for the above Dataframe Row...",
+                "expanded": false
+            },
+            "widgets_gap": "small",
+            "widgets_vertical_alignment": "top",
+            "widgets": [
+                {
+                    "type": "json",
+                    "config": {
+                        "expanded": false,
+                        "note": "the configuration keys are same as st.json",
+                        "body": " {\n            \"widgets_width_spec\": [\n                1\n            ],\n            \"widgets_border\": true,\n            \"with_expander\": {\n                \"label\": \"Dataframe Widget with Sql using the Date input widget values as filters\",\n                \"expanded\": true\n            },\n            \"widgets_gap\": \"small\",\n            \"widgets_vertical_alignment\": \"top\",\n            \"widgets\": [\n                {\n                    \"widget_enabled\" : true,\n                    \"type\": \"dataframe\",\n                    \"query\": \"SELECT order_date,avg_spend FROM (SELECT order_date, RANDOM() * 1000 AS avg_spend FROM generate_series(CURRENT_DATE - INTERVAL 30 DAY, CURRENT_DATE, INTERVAL 1 DAY) AS t(order_date)) as sub WHERE order_date <= '__ending_date__' and order_date >= '__starting_date__'\",\n                    \"config\": {\n                    }\n                }\n            ]\n        }"
+                    }
+                }
+            ]
+        },
+        {
+            "widgets_width_spec": [
+                1
+            ],
+            "widgets_border": true,
+            "with_expander": {
+                "label": "The Full Configuration for this entire page...",
+                "expanded": false
+            },
+            "widgets_gap": "small",
+            "widgets_vertical_alignment": "top",
+            "widgets": [
+                {
+                    "type": "markdown",
+                    "config": {
+                        "body": "refer [github](https://github.com/bytespireio/streamlana/blob/main/LICENSE)"
+                    }
+                }
+            ]
+        }
+    ]
+}
