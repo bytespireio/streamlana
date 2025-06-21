@@ -20,7 +20,7 @@ def render():
         """
         st.code(yaml, language="yaml")
         st.markdown(
-            "refer [github](https://github.com/bytespireio/streamlana/blob/main/LICENSE)"
+            "refer [github](https://github.com/bytespireio/streamlana/blob/main/demo_side_bar.yaml)"
         )
 
 

@@ -71,7 +71,7 @@
                 {
                     "type": "markdown",
                     "config": {
-                        "body": "refer [github](https://github.com/bytespireio/streamlana/blob/main/LICENSE)"
+                        "body": "refer [github](https://github.com/bytespireio/streamlana/blob/main/page_configs_demo/dataframe.json)"
                     }
                 }
             ]
