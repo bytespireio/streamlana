@@ -1,4 +1,4 @@
-# ![](small.ico) StreamLana
+# <img src="readmeLogo.png"/> StreamLana
 
 '*Business Intelligence as Configuration*' 🚀
 
