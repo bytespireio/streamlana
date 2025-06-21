@@ -18,7 +18,7 @@ Its deployed live at https://streamlana.streamlit.app/
 pip install streamlana
 ```
 
-2. Define your pages in hello.yaml file
+2. Define your pages in <span style="background-color: #ffff00; color: #000000;">hello.yaml</span> file.
 ```yaml
 #hello.yaml
 side_bar:
@@ -33,7 +33,7 @@ side_bar:
 ```
 3. Lets define page1 layout - number or rows, the widgets in each row, query powering the widget, widget settings.
 
-Lets do 1 row with 2 widgets in it -> page_configs_demo/hello.json
+Lets do 1 row with 2 widgets in it -> <span style="background-color: #ffff00; color: #000000;">page_configs_demo/hello.json</span>
 ```json
 {
     "page_title": "Hello StreamLana",
@@ -77,7 +77,7 @@ Lets do 1 row with 2 widgets in it -> page_configs_demo/hello.json
 
 4. Lets define page2 layout - number or rows, the widgets in each row, query powering the widget, widget settings.
 
-Lets keep this simple 1 widget and 1 row -> page_configs_demo/about.json
+Lets keep this simple 1 widget and 1 row -> <span style="background-color: #ffff00; color: #000000;">page_configs_demo/about.json</span>
 ```json
 {
     "page_title": "About StreamLana",
@@ -89,7 +89,7 @@ Lets keep this simple 1 widget and 1 row -> page_configs_demo/about.json
     ]
 }
 ```
-4. few lines of code for the main app
+4. few lines of code for the main app -> <span style="background-color: #ffff00; color: #000000;">hello.py</span>
 ```python
 #hello.py
 import logging
