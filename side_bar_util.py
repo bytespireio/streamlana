@@ -14,6 +14,7 @@ import chart_helpers
 from envs import STREAMLANA_DEBUG_STATE, STREAMLANA_URL_PG_NAME_PREFIX
 from util import substitute_placeholders
 
+
 def get_page_name_for_url(full_name: str, pg_anonymous=False) -> str:
     """Generate a URL-friendly name for the page.
     If the environment variable STREAMLANA_ANONYMOUS_PG_NAMES is set to "true",
@@ -29,6 +30,7 @@ def get_page_name_for_url(full_name: str, pg_anonymous=False) -> str:
         return short_hash(full_name)
 
     return full_name.replace(" ", "_").replace("-", "_").lower()
+
 
 def short_hash(s, length=8):
     return hashlib.sha256(s.encode()).hexdigest()[:length]
@@ -93,11 +95,14 @@ def load_side_bar_config_yaml(side_bar_config_file_path):
     return config.get("side_bar", [])
 
 
-def __create_dynamic_func(full_name: str, config_dict, duckbdb_conn, pg_anonymous=False):
+def __create_dynamic_func(
+    full_name: str, config_dict, duckbdb_conn, pg_anonymous=False
+):
     name_in_url = get_page_name_for_url(full_name, pg_anonymous=pg_anonymous)
 
     prefix = os.environ.get(STREAMLANA_URL_PG_NAME_PREFIX, "pg_")
     func_name = f"{prefix}{name_in_url}"
+
     def _template():
         render_dashboard(full_name, config_dict, duckbdb_conn=duckbdb_conn)
 
@@ -232,7 +237,7 @@ def set_page_layout(
     Set the  Length of Width distribution arraypage layout for Streamlit application.
     call it only once. at the top of your application.
     """
-    if '_layout' not in st.session_state:
+    if "_layout" not in st.session_state:
         st.session_state._layout = layout
     st.set_page_config(
         page_title=page_title,
@@ -270,7 +275,9 @@ def render_dashboard(dashboard_name: str, page_config_dict, duckbdb_conn=None):
                 f"Length of 'rows_spec' array: {len(widgets_width_distribution)}, does not match number of widgets: len(widgets) in row:{row_idx} of page '{dashboard_name}'."
             )
         logging.info(
-            "Rendering row in dashboard: %s ,with width distribution: %s", dashboard_name, widgets_width_distribution
+            "Rendering row in dashboard: %s ,with width distribution: %s",
+            dashboard_name,
+            widgets_width_distribution,
         )
         if with_expander is not None:
             with st.expander(

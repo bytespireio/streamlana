@@ -2,7 +2,9 @@
     "page_title": "Json",
     "page_rows": [
         {
-            "widgets_width_spec": [1],
+            "widgets_width_spec": [
+                1
+            ],
             "widgets_border": true,
             "with_expander": null,
             "widgets_gap": "small",
@@ -18,8 +20,10 @@
                 }
             ]
         },
-         {
-            "widgets_width_spec": [1],
+        {
+            "widgets_width_spec": [
+                1
+            ],
             "widgets_border": true,
             "with_expander": {
                 "label": "The configuration for the above json Row...",

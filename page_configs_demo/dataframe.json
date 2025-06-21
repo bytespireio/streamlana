@@ -14,7 +14,7 @@
             "widgets_vertical_alignment": "top",
             "widgets": [
                 {
-                    "widget_enabled" : true,
+                    "widget_enabled": true,
                     "type": "dataframe",
                     "query": "SELECT avg_spend,order_date FROM (SELECT order_date, RANDOM() * 1000 AS avg_spend FROM generate_series(CURRENT_DATE - INTERVAL 30 DAY, CURRENT_DATE, INTERVAL 1 DAY) AS t(order_date)) as sub",
                     "config": {
@@ -22,7 +22,10 @@
                         "height": 400,
                         "use_container_width": true,
                         "hide_index": false,
-                        "column_order": ["order_date", "avg_spend"],
+                        "column_order": [
+                            "order_date",
+                            "avg_spend"
+                        ],
                         "on_select": "ignore",
                         "selection_mode": "multi-row",
                         "note": "same config keys as st.dataframe",
@@ -31,8 +34,10 @@
                 }
             ]
         },
-         {
-            "widgets_width_spec": [1],
+        {
+            "widgets_width_spec": [
+                1
+            ],
             "widgets_border": true,
             "with_expander": {
                 "label": "The configuration for the above Dataframe Row...",

@@ -3,8 +3,12 @@ import yaml
 
 
 def render():
-    st.write("Sometimes we need to render something very custom which might not be possible via configuration.")
-    st.write("We can still write code(traditional streamlit coding) and integrate into 🐙StreamLana.")
+    st.write(
+        "Sometimes we need to render something very custom which might not be possible via configuration."
+    )
+    st.write(
+        "We can still write code(traditional streamlit coding) and integrate into 🐙StreamLana."
+    )
 
     with st.expander("The Config for this page is defined as follows", expanded=False):
         yaml = """  
@@ -15,7 +19,9 @@ def render():
                 code_definition: "page_modules/using_code.py"
         """
         st.code(yaml, language="yaml")
-        st.markdown("refer [github](https://github.com/bytespireio/streamlana/blob/main/LICENSE)")
+        st.markdown(
+            "refer [github](https://github.com/bytespireio/streamlana/blob/main/LICENSE)"
+        )
 
 
 render()

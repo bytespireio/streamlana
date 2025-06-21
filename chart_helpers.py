@@ -2,9 +2,9 @@ import logging
 from datetime import datetime, timedelta
 from typing import Any, Callable, List, Optional, Sequence, Union
 from zoneinfo import ZoneInfo
+
 import numpy as np
 import pandas as pd
-
 import streamlit as st
 
 from app_state import AppState
@@ -22,8 +22,8 @@ def render_rendering_failure(data: str, config_dict=None):
     if isinstance(data, str):
         msg = data
     elif isinstance(data, pd.DataFrame):
-        if 'message' in data.columns:
-            msg =  data['message'].iloc[0]
+        if "message" in data.columns:
+            msg = data["message"].iloc[0]
         else:
             msg = 'query does not return df with "message" column.'
     st.markdown(
@@ -104,7 +104,7 @@ def render_date_input(data, config_dict):
 
     if (
         data is not None
-        and  start_date_col_name in data.columns
+        and start_date_col_name in data.columns
         and start_date_col_name in data.columns
     ):
         start_date = data.loc[0, start_date_col_name].date()
@@ -119,15 +119,19 @@ def render_date_input(data, config_dict):
 
         date_array = [
             get_date(value[0], zone=timezone),
-            get_date(value[1], zone=timezone)
+            get_date(value[1], zone=timezone),
         ]
-
 
     configured_min_value = config_dict.get("min_value", "today-365")
     configured_max_value = config_dict.get("max_value", "today+1")
     min_date = get_date(configured_min_value, zone=timezone)
     max_date = get_date(configured_max_value, zone=timezone)
-    logging.info("for date_input using min_date: %s, max_date: %s, date_array: %s", min_date, max_date, date_array)
+    logging.info(
+        "for date_input using min_date: %s, max_date: %s, date_array: %s",
+        min_date,
+        max_date,
+        date_array,
+    )
 
     # AppState.put(start_date_col_name, date_array[0])
     # AppState.put(end_date_col_name, date_array[1])
@@ -201,7 +205,6 @@ def render_json(df, config_dict):
     )
 
 
-
 def render_title(df, config_dict: dict):
     """
     Render a title using Streamlit's st.title with configuration parameters.
@@ -214,10 +217,13 @@ def render_title(df, config_dict: dict):
     - df (Any): this will be ignored, but it is required to match the signature of other render functions.
     """
     logging.info("Rendering title chart with configuration: %s", config_dict)
-    st.title(body=config_dict.get("body", "Plz set title"),
-             anchor=config_dict.get("anchor", False),
-             help=config_dict.get("help", "help text for title"),
-             width=config_dict.get("width", "content"))
+    st.title(
+        body=config_dict.get("body", "Plz set title"),
+        anchor=config_dict.get("anchor", False),
+        help=config_dict.get("help", "help text for title"),
+        width=config_dict.get("width", "content"),
+    )
+
 
 def render_text(df, config_dict: dict):
     """
@@ -299,7 +305,7 @@ def render_dataframe(data, config_dict):
         - selection_mode (str): Selection mode ('multi-row' or 'single-row').
     """
     logging.info("Rendering dataframe chart with configuration: %s", config_dict)
-    #todo: "implement column_config for dataframe."
+    # todo: "implement column_config for dataframe."
     __render_dataframe(
         data=data,
         width=config_dict.get("width", 0),
@@ -323,8 +329,10 @@ def render_void(void=None, config_dict: dict = None):
     """
     st.write(" ")  # Empty string to render a void container
 
+
 def render_empty(void=None, config_dict: dict = None):
     st.empty()
+
 
 def render_image(df, config_dict: dict):
     st.image(

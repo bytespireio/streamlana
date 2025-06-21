@@ -2,7 +2,9 @@
     "page_title": "",
     "page_rows": [
         {
-            "widgets_width_spec": [1],
+            "widgets_width_spec": [
+                1
+            ],
             "widgets_border": false,
             "with_expander": null,
             "widgets_gap": "small",
@@ -15,13 +17,15 @@
                         "body": "Streamlana: Business Intelligence as Configuration",
                         "help": "Streamlana is a configuration based framework to build Business Intelligence applications with minimal code. It is built on top of Streamlit and provides a set of widgets that can be configured to create complex BI applications without writing any code.",
                         "anchor": null,
-                        "width" : "content"
+                        "width": "content"
                     }
                 }
             ]
         },
-         {
-            "widgets_width_spec": [1],
+        {
+            "widgets_width_spec": [
+                1
+            ],
             "widgets_border": true,
             "with_expander": {
                 "label": "The configuration for the above Row...",

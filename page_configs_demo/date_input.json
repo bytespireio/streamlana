@@ -2,7 +2,9 @@
     "page_title": "Date Input (mostly used as a filter)",
     "page_rows": [
         {
-            "widgets_width_spec": [1],
+            "widgets_width_spec": [
+                1
+            ],
             "note": "widget spec of 1 = 100% width",
             "widgets_border": false,
             "with_expander": null,
@@ -10,11 +12,14 @@
             "widgets_vertical_alignment": "top",
             "widgets": [
                 {
-                    "widget_enabled" : true,
+                    "widget_enabled": true,
                     "type": "date_input",
                     "config": {
                         "label": "Today-7  to  Today, tz = Alaska",
-                        "value" : ["today-7", "today"],
+                        "value": [
+                            "today-7",
+                            "today"
+                        ],
                         "min_value": "today-30",
                         "max_value": "today+1",
                         "start_date_column": "starting_date",
@@ -60,16 +65,17 @@
             "widgets_vertical_alignment": "top",
             "widgets": [
                 {
-                    "widget_enabled" : true,
+                    "widget_enabled": true,
                     "type": "dataframe",
                     "query": "SELECT order_date,avg_spend FROM (SELECT order_date, RANDOM() * 1000 AS avg_spend FROM generate_series(CURRENT_DATE - INTERVAL 30 DAY, CURRENT_DATE, INTERVAL 1 DAY) AS t(order_date)) as sub WHERE order_date <= '__ending_date__' and order_date >= '__starting_date__'",
-                    "config": {
-                    }
+                    "config": {}
                 }
             ]
         },
-         {
-            "widgets_width_spec": [1],
+        {
+            "widgets_width_spec": [
+                1
+            ],
             "widgets_border": true,
             "with_expander": {
                 "label": "The configuration for the above Dataframe Row...",

@@ -1,7 +1,7 @@
 import streamlit as st
 
 st.title("Check the Url in the Browser.")
-col1, col2 = st.columns([0.5,0.5])
+col1, col2 = st.columns([0.5, 0.5])
 with col1:
     with st.container(height=150, border=True):
         st.image("anon.png", width=800)
