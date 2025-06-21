@@ -1,4 +1,4 @@
-# StreamLana
+# ![My Icon](small.ico) StreamLana
 
 '*Business Intelligence as Configuration*' 🚀
 
