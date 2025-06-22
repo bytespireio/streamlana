@@ -119,5 +119,27 @@ render_side_bar_pages(side_bar_config, con)
 streamlit run hello.py
 ```
 
+## Widget Library
 
+Currently, we support the following widgets:
+- st.dataframe
+- st.line_chart
+- st.area_chart
+- st.bar_chart
+- st.pie_chart
+- st.json
+- st.title
+- st.metric
+- st.text
+- st.markdown
+- st.image
+- st.map
+- st.empty
+- st.selectbox
+
+Adding new widgets is easy, just add a new widget type in the `chart_helpers.py`.
+
+ex: implement 'render_<chart_name>(data:pd.DataFrame, config_dict: dict)'
+
+data comes from the duckdb sql query u configure.
 
