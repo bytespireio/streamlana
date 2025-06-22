@@ -1,0 +1,79 @@
+{
+    "page_title": "Area Chart",
+    "page_rows": [
+        {
+            "widgets_width_spec": [
+                1
+            ],
+            "widgets_border": true,
+            "with_expander": null,
+            "widgets_gap": "small",
+            "widgets_vertical_alignment": "top",
+            "widgets": [
+                {
+                    "type": "area_chart",
+                    "query": "SELECT avg_spend,order_date FROM (SELECT order_date, RANDOM() * 1000 AS avg_spend FROM generate_series(CURRENT_DATE - INTERVAL 30 DAY, CURRENT_DATE, INTERVAL 1 DAY) AS t(order_date)) as sub",
+                    "config": {
+                        "x": "order_date",
+                        "y": ["avg_spend"],
+                        "title": "avgSpend Over Time",
+                       "y_label": [
+                            "Avg Spend ($)"
+                        ],
+                        "x_label": [
+                            "Order Date"
+                        ],
+                        "height": null,
+                        "color": [
+                            "#f7d4d4"
+                        ],
+                        "width": null,
+                        "use_container_width": true
+                    }
+                }
+            ]
+        },
+        {
+            "widgets_width_spec": [
+                1
+            ],
+            "widgets_border": true,
+            "with_expander": {
+                "label": "The configuration for the above json Row...",
+                "expanded": false
+            },
+            "widgets_gap": "small",
+            "widgets_vertical_alignment": "top",
+            "widgets": [
+                {
+                    "type": "json",
+                    "config": {
+                        "expanded": true,
+                        "note": "the configuration keys are same as st.json",
+                        "body": "{\n            \"widgets_width_spec\": [\n                1\n            ],\n            \"widgets_border\": true,\n            \"with_expander\": null,\n            \"widgets_gap\": \"small\",\n            \"widgets_vertical_alignment\": \"top\",\n            \"widgets\": [\n                {\n                    \"type\": \"area_chart\",\n                    \"query\": \"SELECT avg_spend,order_date FROM (SELECT order_date, RANDOM() * 1000 AS avg_spend FROM generate_series(CURRENT_DATE - INTERVAL 30 DAY, CURRENT_DATE, INTERVAL 1 DAY) AS t(order_date)) as sub\",\n                    \"config\": {\n                        \"x\": \"order_date\",\n                        \"y\": [\"avg_spend\"],\n                        \"title\": \"avgSpend Over Time\",\n                       \"y_label\": [\n                            \"Avg Spend ($)\"\n                        ],\n                        \"x_label\": [\n                            \"Order Date\"\n                        ],\n                        \"height\": null,\n                        \"color\": [\n                            \"#f7d4d4\"\n                        ],\n                        \"width\": null,\n                        \"use_container_width\": true\n                    }\n                }\n            ]\n        }"
+                    }
+                }
+            ]
+        },
+        {
+            "widgets_width_spec": [
+                1
+            ],
+            "widgets_border": true,
+            "with_expander": {
+                "label": "The Full Configuration for this entire page...",
+                "expanded": false
+            },
+            "widgets_gap": "small",
+            "widgets_vertical_alignment": "top",
+            "widgets": [
+                {
+                    "type": "markdown",
+                    "config": {
+                        "body": "refer [github](https://github.com/bytespireio/streamlana/blob/main/page_configs_demo/area_chart.json)"
+                    }
+                }
+            ]
+        }
+    ]
+}

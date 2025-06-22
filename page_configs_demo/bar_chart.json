@@ -1,0 +1,77 @@
+{
+    "page_title": "Bar Chart",
+    "page_rows": [
+        {
+            "widgets_width_spec": [
+                0.3,0.7
+            ],
+            "widgets_border": false,
+            "with_expander": null,
+            "widgets_gap": "small",
+            "widgets_vertical_alignment": "top",
+            "widgets": [
+                {
+                    "type": "bar_chart",
+                    "query": "WITH categories AS ( SELECT * FROM (VALUES ('toys'), ('clothes'), ('mobiles'), ('laptops'), ('tv') ) AS t(shopping_category) ), random_counts AS ( SELECT shopping_category, CAST(FLOOR(random() * 100 + 1) AS INTEGER) AS order_count FROM categories ) SELECT * FROM random_counts ORDER BY order_count DESC;",
+                    "config": {
+                        "x": "shopping_category",
+                        "y": "order_count",
+                        "x_label": "Shopping Category",
+                        "y_label": "# Orders",
+                        "color": ["#008000"],
+                        "horizontal": false,
+                        "stack": null,
+                        "width": 300,
+                        "height": null,
+                        "use_container_width": false,
+                        "title": ""
+                    }
+                },{
+                    "type" :"empty"
+                }
+            ]
+        },
+        {
+            "widgets_width_spec": [
+                1
+            ],
+            "widgets_border": true,
+            "with_expander": {
+                "label": "The configuration for the above json Row...",
+                "expanded": false
+            },
+            "widgets_gap": "small",
+            "widgets_vertical_alignment": "top",
+            "widgets": [
+                {
+                    "type": "json",
+                    "config": {
+                        "expanded": true,
+                        "note": "the configuration keys are same as st.json",
+                        "body": "{\n            \"widgets_width_spec\": [\n                0.3,0.7\n            ],\n            \"widgets_border\": false,\n            \"with_expander\": null,\n            \"widgets_gap\": \"small\",\n            \"widgets_vertical_alignment\": \"top\",\n            \"widgets\": [\n                {\n                    \"type\": \"bar_chart\",\n                    \"query\": \"WITH categories AS ( SELECT * FROM (VALUES ('toys'), ('clothes'), ('mobiles'), ('laptops'), ('tv') ) AS t(shopping_category) ), random_counts AS ( SELECT shopping_category, CAST(FLOOR(random() * 100 + 1) AS INTEGER) AS order_count FROM categories ) SELECT * FROM random_counts ORDER BY order_count DESC;\",\n                    \"config\": {\n                        \"x\": \"shopping_category\",\n                        \"y\": \"order_count\",\n                        \"x_label\": \"Shopping Category\",\n                        \"y_label\": \"# Orders\",\n                        \"color\": [\"#008000\"],\n                        \"horizontal\": false,\n                        \"stack\": null,\n                        \"width\": 300,\n                        \"height\": null,\n                        \"use_container_width\": false,\n                        \"title\": \"\"\n                    }\n                },{\n                    \"type\" :\"empty\"\n                }\n            ]\n        }"
+                    }
+                }
+            ]
+        },
+        {
+            "widgets_width_spec": [
+                1
+            ],
+            "widgets_border": true,
+            "with_expander": {
+                "label": "The Full Configuration for this entire page...",
+                "expanded": false
+            },
+            "widgets_gap": "small",
+            "widgets_vertical_alignment": "top",
+            "widgets": [
+                {
+                    "type": "markdown",
+                    "config": {
+                        "body": "refer [github](https://github.com/bytespireio/streamlana/blob/main/page_configs_demo/bar_chart.json)"
+                    }
+                }
+            ]
+        }
+    ]
+}

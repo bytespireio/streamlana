@@ -57,6 +57,10 @@ def substitute_placeholders(query):
             )
         if isinstance(val, (list, tuple, np.ndarray)):
             final_value = tuple(val)
+            if all(isinstance(x, bool) for x in final_value) or all(
+                isinstance(x, np.bool) for x in final_value
+            ):
+                final_value = tuple("TRUE" if x else "FALSE" for x in final_value)
         return f"{final_value}" if isinstance(final_value, str) else str(final_value)
 
     final_query = re.sub(r"__([a-zA-Z0-9_]+)__", replacer, query)

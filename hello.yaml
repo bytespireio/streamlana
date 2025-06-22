@@ -8,3 +8,6 @@ side_bar:
       - name: "About page"
         config_file_path:  "page_configs_demo/about.json"
         enabled: True
+      - name: "About page2"
+        config_file_path: "page_configs_demo/about.json"
+        enabled: True

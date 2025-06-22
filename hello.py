@@ -1,6 +1,8 @@
-#hello.py
+# hello.py
 import logging
+
 import duckdb
+
 import side_bar_util
 from side_bar_util import load_side_bar_config_yaml, render_side_bar_pages
 

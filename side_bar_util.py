@@ -11,8 +11,17 @@ import streamlit as st
 from streamlit.commands.page_config import InitialSideBarState, Layout
 
 import chart_helpers
-from envs import STREAMLANA_DEBUG_STATE, STREAMLANA_URL_PG_NAME_PREFIX
+from envs import (
+    STREAMLANA_DEBUG_DF,
+    STREAMLANA_DEBUG_STATE,
+    STREAMLANA_URL_PG_NAME_PREFIX,
+)
 from util import substitute_placeholders
+
+
+def debug_df(df):
+    # todo implement
+    print(df.head(5).astype(str).to_string(index=False))
 
 
 def get_page_name_for_url(full_name: str, pg_anonymous=False) -> str:
@@ -217,6 +226,7 @@ def render_side_bar_pages(
                 except Exception as e:
                     logging.error("error reading the config file: %s", config_file_path)
                     traceback.print_exc()
+                    st.error("⚠ Error reading config file: %s" % config_file_path)
                     raise e
 
         pages[heading] = ordered_pages
@@ -272,7 +282,7 @@ def render_dashboard(dashboard_name: str, page_config_dict, duckbdb_conn=None):
         widgets = row.get("widgets", [])
         if len(widgets) != len(widgets_width_distribution):
             raise ValueError(
-                f"Length of 'rows_spec' array: {len(widgets_width_distribution)}, does not match number of widgets: len(widgets) in row:{row_idx} of page '{dashboard_name}'."
+                f"Length of 'widgets_width_spec' array: {len(widgets_width_distribution)}, does not match number of widgets: len(widgets) in row:{row_idx} of page '{dashboard_name}'."
             )
         logging.info(
             "Rendering row in dashboard: %s ,with width distribution: %s",
@@ -331,6 +341,8 @@ def render_dashboard(dashboard_name: str, page_config_dict, duckbdb_conn=None):
                 duckbdb_conn = duckdb.connect()
             try:
                 df = duckbdb_conn.execute(final_query).df()
+                if os.environ.get(STREAMLANA_DEBUG_DF, "false") == "true":
+                    debug_df(df)
             except Exception as e:
                 logging.error(
                     f"Error executing query: {final_query} for widget type: {widget_type}, dashboard: {dashboard_name}, row: {row_idx}, widget_idx: {widget_idx}"

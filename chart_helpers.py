@@ -137,7 +137,7 @@ def render_date_input(data, config_dict):
     # AppState.put(end_date_col_name, date_array[1])
 
     displayed_date = __render_date_input(
-        label=config_dict.get("label", ""),
+        label=config_dict.get("label", "Select Date Range"),
         value=date_array,
         min_value=min_date,
         max_value=max_date,
@@ -377,11 +377,19 @@ def render_line_chart(data, config_dict):
         width=width,
         height=height,
         use_container_width=use_container_width,
+        color=config_dict.get("color", None),
     )
 
 
 def __render_line_chart(
-    data, x=None, y=None, title=None, width=0, height=0, use_container_width=True
+    data,
+    x=None,
+    y=None,
+    title=None,
+    width=0,
+    height=0,
+    use_container_width=True,
+    color=["#fd0"],  # noqa: E501
 ):
     """
     Render a line chart using Streamlit's st.line_chart.
@@ -407,5 +415,291 @@ def __render_line_chart(
         plot_data = data if y is None else data[y]
 
     st.line_chart(
-        plot_data, width=width, height=height, use_container_width=use_container_width
+        plot_data,
+        width=width,
+        height=height,
+        use_container_width=use_container_width,
+        color=color,
+    )
+
+
+def __render_selectbox(
+    label: str,
+    options: Sequence[Any],
+    index: int = 0,
+    format_func: Callable[[Any], str] = str,
+    key: Optional[str] = None,
+    help: Optional[str] = None,
+    on_change: Optional[Callable] = None,
+    args: Optional[tuple] = None,
+    kwargs: Optional[dict] = None,
+    *,
+    placeholder: Optional[str] = None,
+    disabled: bool = False,
+    label_visibility: str = "visible",  # "visible", "hidden", "collapsed"
+) -> Any:
+    """
+    Full-featured wrapper for st.selectbox.
+    """
+    return st.selectbox(
+        label=label,
+        options=options,
+        index=index,
+        format_func=format_func,
+        key=key,
+        help=help,
+        on_change=on_change,
+        args=args,
+        kwargs=kwargs,
+        placeholder=placeholder,
+        disabled=disabled,
+        label_visibility=label_visibility,
+    )
+
+
+def render_selectbox(data, config_dict: dict):
+    """
+    Render a select box using Streamlit's st.selectbox with configuration parameters.
+
+    Parameters:
+    - data (DataFrame): Data to be used as options in the select box.
+    the options will be taken from the specified column in config_dict using the column name specified by key 'options_column_name' in config_dict (defaults to 'options' if not specified). The value for 'options_column_name' be used as placeholder in sql query as '__<options_column_name>__'
+    If data is None, options will be taken from config_dict['options']. Optionally, data can also contain an alias column specified by 'alias_column_name' in config_dict (defaults to 'options_column_name' if not specified).
+    The alias column is used for display in the UI.
+    if u have multiple select box, suggest to have different 'options_column_name' specified for each select box in the config_dict.
+    - config_dict (dict): Configuration dictionary containing:
+        - label (str): Label for the select box.
+        - options (list): List of options to display fallback in case data is None. To pick from data, the config_dict should have the key with name of df column specified as 'options_column_name'.
+        - index (int): Default selected index.
+        - format_func (callable): Function to format the displayed options.
+        - key (str): Unique key for the select box widget.
+        - help (str): Optional help text.
+        - on_change (callable): Function to call when the selection changes.
+        - args (tuple): Arguments to pass to the on_change function.
+        - kwargs (dict): Keyword arguments to pass to the on_change function.
+        - placeholder (str): Placeholder text when no option is selected.
+        - disabled (bool): Whether the select box is disabled.
+        - label_visibility (str): Visibility of the label ('visible', 'hidden', 'collapsed').
+        - select_box_filter_column (str): must be unique in the app. defaults to <sidebar_heading_name>_<row_idx>_<widget_idx> .This will be used as placeholder in sql query as '__<sidebar_heading_name>_<row_idx>_<widget_idx>__'
+    """
+    widget_uniq_key = config_dict["widget_uniq_key"]
+    logging.info(
+        "Rendering selectbox with configuration: %s, widget_uniq_key: %s",
+        config_dict,
+        widget_uniq_key,
+    )
+
+    options_column_name = config_dict.get("options_column_name", "options")
+    alias_column_name = config_dict.get("alias_column_name", "options")
+    if data is not None and options_column_name in data.columns:
+        options = data[options_column_name].tolist()
+        aliases = options
+        if alias_column_name != options_column_name:
+            aliases = data[alias_column_name].tolist()
+    else:
+        options = config_dict.get("options", [])
+        aliases = options
+
+    alias_to_option_map = dict(zip(aliases, options))
+
+    filter_state_key = config_dict.get("options_column_name")
+    filter_state_key_alias = filter_state_key + "__alias"
+    filter_state_key_idx = filter_state_key + "__idx"
+
+    if AppState.get(filter_state_key_alias) is not None:
+        alias_chosen = AppState.get(filter_state_key_alias)
+        if alias_chosen is not None:
+            default_index = aliases.index(alias_chosen)
+        else:
+            default_index = config_dict.get("index", 0)
+    else:
+        default_index = config_dict.get("index", 0)
+
+    alias_chosen = __render_selectbox(
+        label=config_dict.get("label", "Select an option"),
+        options=aliases,
+        index=config_dict.get("index", 0),
+        format_func=config_dict.get("format_func", str),
+        key=config_dict.get("key", widget_uniq_key),
+        help=config_dict.get("help", None),
+        on_change=config_dict.get("on_change", None),
+        args=config_dict.get("args", None),
+        kwargs=config_dict.get("kwargs", None),
+        placeholder=config_dict.get("placeholder", ""),
+        disabled=config_dict.get("disabled", False),
+        label_visibility=config_dict.get("label_visibility", "visible"),
+    )
+    # save the value selected
+    AppState.put(filter_state_key, alias_to_option_map[alias_chosen])
+    AppState.put(filter_state_key_alias, alias_chosen)
+    AppState.put(filter_state_key_idx, aliases.index(alias_chosen))
+
+    return alias_chosen
+
+
+def render_metric(df, config_dict):
+    """
+    Render a metric using Streamlit's st.metric with configuration parameters.
+    """
+    logging.info("Rendering metric with configuration: %s", config_dict)
+    value_column_name = config_dict.get("value_column", "value")
+    delta_value_column_name = config_dict.get("delta_value_column", "delta")
+    if df is not None and value_column_name in df.columns:
+        value = df[value_column_name].iloc[0]
+        value if isinstance(value, (str, int, float)) else str(value)
+        delta = None
+        if delta_value_column_name in df.columns:
+            delta = df[delta_value_column_name].iloc[0]
+    else:
+        raise ValueError(
+            f"Column 'Could not get metric from Metric result DataFrame. Check query for widget: {config_dict.get('widget_uniq_key')}."
+        )
+    st.metric(
+        label=config_dict.get("label", ""),
+        value=value,
+        delta=delta,
+        help=config_dict.get("help"),
+        label_visibility=config_dict.get("label_visibility", "visible"),
+        border=config_dict.get("border", False),
+        width=config_dict.get("width", "content"),
+    )
+
+
+def render_bar_chart(data: pd.DataFrame, config_dict: dict):
+    """
+    Render a bar chart using Streamlit's st.bar_chart with configuration parameters.
+
+    Parameters:
+    - data (pd.DataFrame): The data to plot.
+    - config_dict (dict): Configuration dictionary containing:
+        - x (str or None): Column name for x-axis (must be in data). If None, index is used.
+        - y (str, list of str, or None): Column(s) for y-axis. If None, all columns except x are used.
+        - x_label (str): Label for the x-axis.
+        - y_label (str): Label for the y-axis.
+        - color (str, list of str, or None): Color(s) for the bars.
+        - horizontal (bool): Whether to render the bars horizontally.
+        - stack (bool or str): Stacking configuration ('normalize', 'center', 'layered', None).
+        - width (int): Width of the chart. 0 means default.
+        - height (int): Height of the chart. 0 means default.
+        - use_container_width (bool): Whether to use the full container width.
+        - title (str): Optional title to display above the chart.
+    """
+    logging.info("Rendering bar chart with configuration: %s", config_dict)
+    __render_bar_chart(
+        data=data,
+        x=config_dict.get("x"),
+        y=config_dict.get("y"),
+        x_label=config_dict.get("x_label"),
+        y_label=config_dict.get("y_label"),
+        color=config_dict.get("color"),
+        horizontal=config_dict.get("horizontal", False),
+        stack=config_dict.get("stack", None),
+        width=config_dict.get("width", 0),
+        height=config_dict.get("height", 0),
+        use_container_width=config_dict.get("use_container_width", True),
+        title=config_dict.get("title"),
+    )
+
+
+def __render_bar_chart(
+    data: pd.DataFrame,
+    x: Optional[str] = None,
+    y: Optional[Union[str, List[str]]] = None,
+    x_label: Optional[str] = None,
+    y_label: Optional[str] = None,
+    color: Optional[Union[str, List[str]]] = None,
+    horizontal: bool = False,
+    stack: Optional[
+        Union[bool, str]
+    ] = None,  # Valid: True, False, "normalize", "center", "layered", None
+    width: Optional[int] = None,
+    height: Optional[int] = None,
+    use_container_width: bool = True,
+    title: Optional[str] = None,
+):
+    """
+    Render a bar chart using Streamlit's st.bar_chart with all configuration parameters.
+    """
+    if title:
+        st.subheader(title)
+
+    # Don't modify the dataframe — pass x/y as-is to st.bar_chart
+    st.bar_chart(
+        data=data,
+        x=x,
+        y=y,
+        x_label=x_label,
+        y_label=y_label,
+        color=color,
+        horizontal=horizontal,
+        stack=stack,
+        width=width,
+        height=height,
+        use_container_width=use_container_width,
+    )
+
+
+def render_pie_chart(df, config_dict):
+    """
+    Render a pie chart using Plotly Express and Streamlit.
+    :param df:
+    :param config_dict:
+        - category (str): Column name for categories (default is 'Category').
+        - value (str): Column name for values (default is 'Value').
+        - title (str): Title of the pie chart.
+        - width (int): Width of the chart. 0 means default.
+        - height (int): Height of the chart. 0 means default.
+    :return:
+    """
+    import plotly.express as px
+
+    fig = px.pie(
+        df,
+        names=config_dict.get("category", "Category"),
+        values=config_dict.get("value", "Value"),
+        title=config_dict.get("title", "Pie Chart"),
+        color_discrete_sequence=config_dict.get("color_discrete_sequence", None),
+    )
+    st.plotly_chart(fig)
+
+
+def render_map(data, config_dict: dict = {}):
+    """
+    :param data:    DataFrame containing latitude and longitude columns.
+    :param config_dict:
+    :return:
+    """
+    logging.info("Rendering map with configuration: %s", config_dict)
+    st.map(
+        data=data,
+        latitude=config_dict.get("latitude"),
+        longitude=config_dict.get("longitude"),
+        color=config_dict.get("color"),
+        size=config_dict.get("size"),
+        zoom=config_dict.get("zoom", 10),
+        use_container_width=config_dict.get("use_container_width", True),
+        width=config_dict.get("width"),
+        height=config_dict.get("height"),
+    )
+
+
+def render_area_chart(
+    data: pd.DataFrame,
+    config_dict: dict,
+):
+    """
+    Fully parameterized wrapper for st.area_chart.
+    """
+
+    st.area_chart(
+        data=data,
+        x=config_dict.get("x"),
+        y=config_dict.get("y"),
+        x_label=config_dict.get("x_label"),
+        y_label=config_dict.get("y_label"),
+        color=config_dict.get("color"),
+        stack=config_dict.get("stack", None),
+        width=config_dict.get("width", 0),
+        height=config_dict.get("height", 0),
+        use_container_width=config_dict.get("use_container_width", True),
     )
