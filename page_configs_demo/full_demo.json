@@ -43,7 +43,7 @@
             "widgets_width_spec": [
                 0.1,
                 0.1,
-                0.1,
+                0.2,
                 0.1,
                 0.05,
                 0.05
@@ -83,7 +83,7 @@
                 },
                 {
                     "type": "metric",
-                    "query": "SELECT sum(total_people_involved) as total_people_involved FROM crash_cube() where is_am in __is_am_filter__ and crash_day >= '__start_date_filter__' and  crash_day <= '__end_date_filter__'",
+                    "query": "SELECT cast(sum(total_people_involved) as bigint) as total_people_involved FROM crash_cube() where is_am in __is_am_filter__ and crash_day >= '__start_date_filter__' and  crash_day <= '__end_date_filter__'",
                     "config": {
                         "value_column": "total_people_involved",
                         "label": "Total People Involved",
