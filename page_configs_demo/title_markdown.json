@@ -76,7 +76,7 @@
                 {
                     "type": "markdown",
                     "config": {
-                        "body": "refer [github_repo](https://github.com/bytespireio/streamlana)"
+                        "body": "refer [github](https://github.com/bytespireio/streamlana/blob/main/page_configs_demo/title_markdown.json)"
                     }
                 }
             ]
