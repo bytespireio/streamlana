@@ -5,6 +5,7 @@ description = "Business Intelligence as Configuration"
 authors = ["vishnu rao"]
 license = "mit license"
 readme = "README.md"
+#package-mode = false
 
 [tool.poetry.dependencies]
 python = "^3.11"
@@ -28,3 +29,18 @@ flake8 = "7.1.0"
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[project.packages]
+include = ["."]
+from = "."
+exclude = []
+
+[project]
+name = "streamlana"
+version = "0.1.0"
+#license = "Mit License"
+description = "Business Intelligence as Configuration"
+authors = [
+  { name = "vishnu rao", email = "bytespireio@gmail.com" }]
+readme = "README.md"
+dependencies = {file = ["requirements.txt"]}
