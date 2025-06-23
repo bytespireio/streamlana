@@ -1,12 +1,12 @@
 {
-    "page_title": "",
+    "page_title": "Streamlana - Business Intelligence as Config",
     "page_rows": [
         {
-            "widgets_width_spec": [0.4, 0.2, 0.1,0.3],
+            "widgets_width_spec": [0.5, 0.08, 0.12,0.3],
             "with_expander": null,
             "widgets": [
                 {
-                    "type": "title",
+                    "type": "header",
                     "config": {
                         "body": "Chicago Car Crashes",
                         "help": "https://data.cityofchicago.org/Transportation/Traffic-Crashes-Crashes/85ca-t3if/about_data"
@@ -33,7 +33,7 @@
                         "max_value": "today+1",
                         "start_date_column": "start_date_filter",
                         "end_date_column": "end_date_filter",
-                        "label": "⚠\uFE0FWe have data for (2024-04-14/20) for this demo.",
+                        "label": "⚠\uFE0FWe have data for (2024-04-14/20).",
                         "timezone": "America/Chicago"
                     }
                 }
@@ -52,7 +52,7 @@
             "widgets": [
                 {
                     "type": "metric",
-                    "query": "SELECT cast(sum(total_fatal)as bigint) as total_fatalities FROM iceberg_scan('/tmp/iceberg_crashes/db/crashes_cube', allow_moved_paths = true) where is_am in __is_am_filter__ and crash_day >= '__start_date_filter__' and  crash_day <= '__end_date_filter__'",
+                    "query": "SELECT cast(sum(total_fatal)as bigint) as total_fatalities FROM crash_cube() where is_am in __is_am_filter__ and crash_day >= '__start_date_filter__' and  crash_day <= '__end_date_filter__'",
                     "config": {
                         "value_column": "total_fatalities",
                         "label": "Total Fatalities",
@@ -62,7 +62,7 @@
                 },
                 {
                     "type": "metric",
-                    "query": "SELECT cast(sum(total_injured) as bigint) as total_injured FROM iceberg_scan('/tmp/iceberg_crashes/db/crashes_cube', allow_moved_paths = true) where is_am in __is_am_filter__ and crash_day >= '__start_date_filter__' and  crash_day <= '__end_date_filter__'",
+                    "query": "SELECT cast(sum(total_injured) as bigint) as total_injured FROM crash_cube() where is_am in __is_am_filter__ and crash_day >= '__start_date_filter__' and  crash_day <= '__end_date_filter__'",
                     "config": {
                         "value_column": "total_injured",
                         "label": "Total Injuries",
@@ -73,7 +73,7 @@
                 },
                 {
                     "type": "metric",
-                    "query": "SELECT sum(total_damage) as total_damage FROM iceberg_scan('/tmp/iceberg_crashes/db/crashes_cube', allow_moved_paths = true) where is_am in __is_am_filter__ and crash_day >= '__start_date_filter__' and  crash_day <= '__end_date_filter__'",
+                    "query": "SELECT sum(total_damage) as total_damage FROM crash_cube() where is_am in __is_am_filter__ and crash_day >= '__start_date_filter__' and  crash_day <= '__end_date_filter__'",
                     "config": {
                         "value_column": "total_damage",
                         "label": "Total Damage $",
@@ -83,7 +83,7 @@
                 },
                 {
                     "type": "metric",
-                    "query": "SELECT sum(total_people_involved) as total_people_involved FROM iceberg_scan('/tmp/iceberg_crashes/db/crashes_cube', allow_moved_paths = true) where is_am in __is_am_filter__ and crash_day >= '__start_date_filter__' and  crash_day <= '__end_date_filter__'",
+                    "query": "SELECT sum(total_people_involved) as total_people_involved FROM crash_cube() where is_am in __is_am_filter__ and crash_day >= '__start_date_filter__' and  crash_day <= '__end_date_filter__'",
                     "config": {
                         "value_column": "total_people_involved",
                         "label": "Total People Involved",
@@ -106,8 +106,9 @@
             "with_expander": null,
             "widgets": [
                 {
+                    "widget_enabled" : true,
                     "type": "line_chart",
-                    "query": "SELECT crash_day,estimate_sketch(union_sketches(sketches)) AS total_crashes from (SELECT crash_day, list(crashes_set_sketch) as sketches FROM iceberg_scan('/tmp/iceberg_crashes/db/crashes_cube', allow_moved_paths = true) where is_am in __is_am_filter__ and crash_day >= '__start_date_filter__' and  crash_day <= '__end_date_filter__' group by crash_day order by crash_day) order by crash_day",
+                    "query": "SELECT crash_day,estimate_sketch(union_sketches(sketches)) AS total_crashes from (SELECT crash_day, list(crashes_set_sketch) as sketches FROM crash_cube() where is_am in __is_am_filter__ and crash_day >= '__start_date_filter__' and  crash_day <= '__end_date_filter__' group by crash_day order by crash_day) order by crash_day",
                     "config": {
                         "x": "crash_day",
                         "y": [
@@ -155,7 +156,7 @@
                 {
                     "widget_enabled": true,
                     "type": "metric",
-                    "query": "WITH total AS ( SELECT crash_day, Estimate_sketch(Union_sketches(List(crashes_set_sketch))) AS total_crashes FROM Iceberg_scan('/tmp/iceberg_crashes/db/crashes_cube', allow_moved_paths = true) WHERE is_am IN __is_am_filter__ AND crash_day >= '__start_date_filter__' AND crash_day <= '__end_date_filter__' GROUP BY crash_day), behaviour AS ( SELECT crash_day, estimate_sketch(union_sketches(list(crashes_set_sketch))) AS behaviour_crashes FROM iceberg_scan('/tmp/iceberg_crashes/db/crashes_cube', allow_moved_paths = true) WHERE is_cell_phone_use = true AND is_am IN __is_am_filter__ AND crash_day >= '__start_date_filter__' AND crash_day <= '__end_date_filter__' GROUP BY crash_day) SELECT t.crash_day, t.total_crashes, COALESCE(d.behaviour_crashes, 0) AS behaviour_crashes, round(100.0 * COALESCE(d.behaviour_crashes, 0) / t.total_crashes, 2) AS percent_cell_phone_use FROM total t LEFT JOIN behaviour d ON t.crash_day = d.crash_day ORDER BY t.crash_day;",
+                    "query": "WITH total AS ( SELECT crash_day, Estimate_sketch(Union_sketches(List(crashes_set_sketch))) AS total_crashes FROM crash_cube() WHERE is_am IN __is_am_filter__ AND crash_day >= '__start_date_filter__' AND crash_day <= '__end_date_filter__' GROUP BY crash_day), behaviour AS ( SELECT crash_day, estimate_sketch(union_sketches(list(crashes_set_sketch))) AS behaviour_crashes FROM crash_cube() WHERE is_cell_phone_use = true AND is_am IN __is_am_filter__ AND crash_day >= '__start_date_filter__' AND crash_day <= '__end_date_filter__' GROUP BY crash_day) SELECT t.crash_day, t.total_crashes, COALESCE(d.behaviour_crashes, 0) AS behaviour_crashes, round(100.0 * COALESCE(d.behaviour_crashes, 0) / t.total_crashes, 2) AS percent_cell_phone_use FROM total t LEFT JOIN behaviour d ON t.crash_day = d.crash_day ORDER BY t.crash_day;",
                     "config": {
                         "value_column": "percent_cell_phone_use",
                         "label": "% Crashes involving Cell Phone \uD83D\uDCF2"
@@ -164,7 +165,7 @@
                 {
                     "widget_enabled": true,
                     "type": "metric",
-                    "query": "WITH total AS ( SELECT crash_day, Estimate_sketch(Union_sketches(List(crashes_set_sketch))) AS total_crashes FROM Iceberg_scan('/tmp/iceberg_crashes/db/crashes_cube', allow_moved_paths = true) WHERE is_am IN __is_am_filter__ AND crash_day >= '__start_date_filter__' AND crash_day <= '__end_date_filter__' GROUP BY crash_day), behaviour AS ( SELECT crash_day, estimate_sketch(union_sketches(list(crashes_set_sketch))) AS behaviour_crashes FROM iceberg_scan('/tmp/iceberg_crashes/db/crashes_cube', allow_moved_paths = true) WHERE is_hit_run = true AND is_am IN __is_am_filter__ AND crash_day >= '__start_date_filter__' AND crash_day <= '__end_date_filter__' GROUP BY crash_day) SELECT t.crash_day, t.total_crashes, COALESCE(d.behaviour_crashes, 0) AS behaviour_crashes, round(100.0 * COALESCE(d.behaviour_crashes, 0) / t.total_crashes, 2) AS percent_is_hit_run FROM total t LEFT JOIN behaviour d ON t.crash_day = d.crash_day ORDER BY t.crash_day;",
+                    "query": "WITH total AS ( SELECT crash_day, Estimate_sketch(Union_sketches(List(crashes_set_sketch))) AS total_crashes FROM crash_cube() WHERE is_am IN __is_am_filter__ AND crash_day >= '__start_date_filter__' AND crash_day <= '__end_date_filter__' GROUP BY crash_day), behaviour AS ( SELECT crash_day, estimate_sketch(union_sketches(list(crashes_set_sketch))) AS behaviour_crashes FROM crash_cube() WHERE is_hit_run = true AND is_am IN __is_am_filter__ AND crash_day >= '__start_date_filter__' AND crash_day <= '__end_date_filter__' GROUP BY crash_day) SELECT t.crash_day, t.total_crashes, COALESCE(d.behaviour_crashes, 0) AS behaviour_crashes, round(100.0 * COALESCE(d.behaviour_crashes, 0) / t.total_crashes, 2) AS percent_is_hit_run FROM total t LEFT JOIN behaviour d ON t.crash_day = d.crash_day ORDER BY t.crash_day;",
                     "config": {
                         "value_column": "percent_is_hit_run",
                         "label": "% Crashes involving Hit Run \uD83C\uDFC3\uD83C\uDFFB\u200D♂\uFE0F\u200D➡\uFE0F \uD83D\uDE97"
@@ -186,7 +187,8 @@
             "widgets": [
                 {
                     "type": "map",
-                    "query": "SELECT lat, lon FROM iceberg_scan('/tmp/iceberg_crashes/db/crashes_cube', allow_moved_paths = true) where lat IS NOT NULL AND lon IS NOT NULL  AND NOT isnan(lat) AND NOT isnan(lon) and is_am in __is_am_filter__ and crash_day >= '__start_date_filter__' and  crash_day <= '__end_date_filter__'",
+                    "widget_enabled" : true,
+                    "query": "SELECT lat, lon FROM crash_cube() where lat IS NOT NULL AND lon IS NOT NULL  AND NOT isnan(lat) AND NOT isnan(lon) and is_am in __is_am_filter__ and crash_day >= '__start_date_filter__' and  crash_day <= '__end_date_filter__' limit 50",
                     "config": {
                         "color": "#e30712",
                         "latitude": "lat",
@@ -214,7 +216,8 @@
             "widgets": [
                 {
                     "type": "bar_chart",
-                    "query": "SELECT weather_condition, Estimate_sketch(Union_sketches(sketches)) AS total_crashes FROM (SELECT weather_condition, List(crashes_set_sketch) AS sketches FROM iceberg_scan('/tmp/iceberg_crashes/db/crashes_cube', allow_moved_paths = true) WHERE is_am IN __is_am_filter__ AND crash_day >= '__start_date_filter__' AND crash_day <= '__end_date_filter__' GROUP BY weather_condition ORDER BY weather_condition) ORDER BY weather_condition",
+                    "widget_enabled" : true,
+                    "query": "SELECT weather_condition, Estimate_sketch(Union_sketches(sketches)) AS total_crashes FROM (SELECT weather_condition, List(crashes_set_sketch) AS sketches FROM crash_cube() WHERE is_am IN __is_am_filter__ AND crash_day >= '__start_date_filter__' AND crash_day <= '__end_date_filter__' GROUP BY weather_condition ORDER BY weather_condition) ORDER BY weather_condition",
                     "config": {
                         "x": "weather_condition",
                         "y": "total_crashes",
@@ -231,7 +234,8 @@
                 },
                 {
                     "type": "pie_chart",
-                    "query": "SELECT gender, estimate_sketch(union_sketches(sketches)) AS total_crashes FROM ( SELECT 'Male' AS gender, list(crashes_set_sketch) AS sketches FROM iceberg_scan('/tmp/iceberg_crashes/db/crashes_cube', allow_moved_paths = true) WHERE is_am in __is_am_filter__ and crash_day >= '__start_date_filter__' AND crash_day <= '__end_date_filter__' AND list_contains(list_of_gender, 'M') GROUP BY gender UNION ALL SELECT 'Female' AS gender, list(crashes_set_sketch) AS sketches FROM iceberg_scan('/tmp/iceberg_crashes/db/crashes_cube', allow_moved_paths = true) WHERE crash_day >= '__start_date_filter__' AND crash_day <= '__end_date_filter__' AND list_contains(list_of_gender, 'F') GROUP BY gender UNION ALL SELECT 'X' AS gender, list(crashes_set_sketch) AS sketches FROM iceberg_scan('/tmp/iceberg_crashes/db/crashes_cube', allow_moved_paths = true) WHERE crash_day >= '__start_date_filter__' AND crash_day <= '__end_date_filter__' AND list_contains(list_of_gender, 'X') GROUP BY gender ) ORDER BY gender;",
+                    "widget_enabled" : true,
+                    "query": "SELECT gender, estimate_sketch(union_sketches(sketches)) AS total_crashes FROM ( SELECT 'Male' AS gender, list(crashes_set_sketch) AS sketches FROM crash_cube() WHERE is_am in __is_am_filter__ and crash_day >= '__start_date_filter__' AND crash_day <= '__end_date_filter__' AND list_contains(list_of_gender, 'M') GROUP BY gender UNION ALL SELECT 'Female' AS gender, list(crashes_set_sketch) AS sketches FROM crash_cube() WHERE crash_day >= '__start_date_filter__' AND crash_day <= '__end_date_filter__' AND list_contains(list_of_gender, 'F') GROUP BY gender UNION ALL SELECT 'X' AS gender, list(crashes_set_sketch) AS sketches FROM crash_cube() WHERE crash_day >= '__start_date_filter__' AND crash_day <= '__end_date_filter__' AND list_contains(list_of_gender, 'X') GROUP BY gender ) ORDER BY gender;",
                     "config": {
                         "category": "gender",
                         "value": "total_crashes",
@@ -245,7 +249,8 @@
                 },
                 {
                     "type": "pie_chart",
-                    "query": "SELECT age_group, estimate_sketch(union_sketches(sketches)) AS total_crashes FROM ( SELECT 'below_5' AS age_group, list(crashes_set_sketch) AS sketches FROM iceberg_scan('/tmp/iceberg_crashes/db/crashes_cube', allow_moved_paths = true) WHERE is_am in __is_am_filter__ and crash_day >= '__start_date_filter__' AND crash_day <= '__end_date_filter__' AND is_age_below_5 GROUP BY age_group UNION ALL SELECT '10s' AS age_group, list(crashes_set_sketch) AS sketches FROM iceberg_scan('/tmp/iceberg_crashes/db/crashes_cube', allow_moved_paths = true) WHERE crash_day >= '__start_date_filter__' AND crash_day <= '__end_date_filter__' AND is_age_10s GROUP BY age_group UNION ALL SELECT '20s' AS age_group, list(crashes_set_sketch) AS sketches FROM iceberg_scan('/tmp/iceberg_crashes/db/crashes_cube', allow_moved_paths = true) WHERE crash_day >= '__start_date_filter__' AND crash_day <= '__end_date_filter__' AND is_age_20s GROUP BY age_group UNION ALL SELECT '30s' AS age_group, list(crashes_set_sketch) AS sketches FROM iceberg_scan('/tmp/iceberg_crashes/db/crashes_cube', allow_moved_paths = true) WHERE crash_day >= '__start_date_filter__' AND crash_day <= '__end_date_filter__' AND is_age_30s GROUP BY age_group UNION ALL SELECT '40s' AS age_group, list(crashes_set_sketch) AS sketches FROM iceberg_scan('/tmp/iceberg_crashes/db/crashes_cube', allow_moved_paths = true) WHERE crash_day >= '__start_date_filter__' AND crash_day <= '__end_date_filter__' AND is_age_40s GROUP BY age_group UNION ALL SELECT '50s' AS age_group, list(crashes_set_sketch) AS sketches FROM iceberg_scan('/tmp/iceberg_crashes/db/crashes_cube', allow_moved_paths = true) WHERE crash_day >= '__start_date_filter__' AND crash_day <= '__end_date_filter__' AND is_age_50s GROUP BY age_group UNION ALL SELECT 'senior' AS age_group, list(crashes_set_sketch) AS sketches FROM iceberg_scan('/tmp/iceberg_crashes/db/crashes_cube', allow_moved_paths = true) WHERE crash_day >= '__start_date_filter__' AND crash_day <= '__end_date_filter__' AND is_age_senior GROUP BY age_group ) ORDER BY age_group;",
+                    "widget_enabled" : true,
+                    "query": "SELECT age_group, estimate_sketch(union_sketches(sketches)) AS total_crashes FROM ( SELECT 'below_5' AS age_group, list(crashes_set_sketch) AS sketches FROM crash_cube() WHERE is_am in __is_am_filter__ and crash_day >= '__start_date_filter__' AND crash_day <= '__end_date_filter__' AND is_age_below_5 GROUP BY age_group UNION ALL SELECT '10s' AS age_group, list(crashes_set_sketch) AS sketches FROM crash_cube() WHERE crash_day >= '__start_date_filter__' AND crash_day <= '__end_date_filter__' AND is_age_10s GROUP BY age_group UNION ALL SELECT '20s' AS age_group, list(crashes_set_sketch) AS sketches FROM crash_cube() WHERE crash_day >= '__start_date_filter__' AND crash_day <= '__end_date_filter__' AND is_age_20s GROUP BY age_group UNION ALL SELECT '30s' AS age_group, list(crashes_set_sketch) AS sketches FROM crash_cube() WHERE crash_day >= '__start_date_filter__' AND crash_day <= '__end_date_filter__' AND is_age_30s GROUP BY age_group UNION ALL SELECT '40s' AS age_group, list(crashes_set_sketch) AS sketches FROM crash_cube() WHERE crash_day >= '__start_date_filter__' AND crash_day <= '__end_date_filter__' AND is_age_40s GROUP BY age_group UNION ALL SELECT '50s' AS age_group, list(crashes_set_sketch) AS sketches FROM crash_cube() WHERE crash_day >= '__start_date_filter__' AND crash_day <= '__end_date_filter__' AND is_age_50s GROUP BY age_group UNION ALL SELECT 'senior' AS age_group, list(crashes_set_sketch) AS sketches FROM crash_cube() WHERE crash_day >= '__start_date_filter__' AND crash_day <= '__end_date_filter__' AND is_age_senior GROUP BY age_group ) ORDER BY age_group;",
                     "config": {
                         "category": "age_group",
                         "value": "total_crashes",
@@ -267,6 +272,7 @@
             "widgets_vertical_alignment": "top",
             "widgets": [
                 {
+                    "widget_enabled" : true,
                     "type": "markdown",
                     "config": {
                         "body": "refer [github](https://github.com/bytespireio/streamlana/blob/main/page_configs_demo/full_demo.json)"
