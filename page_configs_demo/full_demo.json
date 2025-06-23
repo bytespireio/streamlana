@@ -2,7 +2,7 @@
     "page_title": "",
     "page_rows": [
         {
-            "widgets_width_spec": [0.4, 0.2, 0.1,0.3],
+            "widgets_width_spec": [0.5, 0.1, 0.1,0.3],
             "with_expander": null,
             "widgets": [
                 {
@@ -33,7 +33,7 @@
                         "max_value": "today+1",
                         "start_date_column": "start_date_filter",
                         "end_date_column": "end_date_filter",
-                        "label": "⚠\uFE0FWe have data for (2024-04-14/20) for this demo.",
+                        "label": "⚠\uFE0FWe have data for (2024-04-14/20).",
                         "timezone": "America/Chicago"
                     }
                 }
