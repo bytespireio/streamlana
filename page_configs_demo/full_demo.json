@@ -187,8 +187,8 @@
             "widgets": [
                 {
                     "type": "map",
-                    "widget_enabled" : false,
-                    "query": "SELECT lat, lon FROM crash_cube() where lat IS NOT NULL AND lon IS NOT NULL  AND NOT isnan(lat) AND NOT isnan(lon) and is_am in __is_am_filter__ and crash_day >= '__start_date_filter__' and  crash_day <= '__end_date_filter__'",
+                    "widget_enabled" : true,
+                    "query": "SELECT lat, lon FROM crash_cube() where lat IS NOT NULL AND lon IS NOT NULL  AND NOT isnan(lat) AND NOT isnan(lon) and is_am in __is_am_filter__ and crash_day >= '__start_date_filter__' and  crash_day <= '__end_date_filter__' limit 20",
                     "config": {
                         "color": "#e30712",
                         "latitude": "lat",
