@@ -6,7 +6,8 @@ enableXsrfProtection = false
 enableCORS = true
 enableWebsocketCompression = false
 fileWatcherType = "none"
-headless = false
+# to deploy to streamlit cloud need headless=true
+headless = true
 
 [browser]
 gatherUsageStats = false

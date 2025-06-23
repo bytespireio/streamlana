@@ -1,0 +1,252 @@
+{
+  "format-version" : 2,
+  "table-uuid" : "67f7ebbb-8105-4ba5-b1a2-dc37545ae269",
+  "location" : "/Users/vishnuch/work/gitcode/bytespireio/streamlana/data/iceberg_crashes/db/crashes_cube",
+  "last-sequence-number" : 1,
+  "last-updated-ms" : 1750651375560,
+  "last-column-id" : 35,
+  "current-schema-id" : 0,
+  "schemas" : [ {
+    "type" : "struct",
+    "schema-id" : 0,
+    "fields" : [ {
+      "id" : 1,
+      "name" : "crash_day",
+      "required" : false,
+      "type" : "date"
+    }, {
+      "id" : 2,
+      "name" : "is_am",
+      "required" : false,
+      "type" : "boolean"
+    }, {
+      "id" : 3,
+      "name" : "total_damage",
+      "required" : false,
+      "type" : "int"
+    }, {
+      "id" : 4,
+      "name" : "total_injured",
+      "required" : false,
+      "type" : "int"
+    }, {
+      "id" : 5,
+      "name" : "total_fatal",
+      "required" : false,
+      "type" : "int"
+    }, {
+      "id" : 6,
+      "name" : "weather_condition",
+      "required" : false,
+      "type" : "string"
+    }, {
+      "id" : 7,
+      "name" : "lighting_condition",
+      "required" : false,
+      "type" : "string"
+    }, {
+      "id" : 8,
+      "name" : "is_hit_run",
+      "required" : false,
+      "type" : "boolean"
+    }, {
+      "id" : 9,
+      "name" : "street_name",
+      "required" : false,
+      "type" : "string"
+    }, {
+      "id" : 10,
+      "name" : "lat",
+      "required" : false,
+      "type" : "double"
+    }, {
+      "id" : 11,
+      "name" : "lon",
+      "required" : false,
+      "type" : "double"
+    }, {
+      "id" : 12,
+      "name" : "road_defect",
+      "required" : false,
+      "type" : "string"
+    }, {
+      "id" : 13,
+      "name" : "is_cell_phone_use",
+      "required" : false,
+      "type" : "boolean"
+    }, {
+      "id" : 14,
+      "name" : "is_drunk",
+      "required" : false,
+      "type" : "boolean"
+    }, {
+      "id" : 15,
+      "name" : "list_of_hospital",
+      "required" : false,
+      "type" : {
+        "type" : "list",
+        "element-id" : 31,
+        "element" : "string",
+        "element-required" : false
+      }
+    }, {
+      "id" : 16,
+      "name" : "list_of_gender",
+      "required" : false,
+      "type" : {
+        "type" : "list",
+        "element-id" : 32,
+        "element" : "string",
+        "element-required" : false
+      }
+    }, {
+      "id" : 17,
+      "name" : "is_age_below_5",
+      "required" : false,
+      "type" : "boolean"
+    }, {
+      "id" : 18,
+      "name" : "is_age_10s",
+      "required" : false,
+      "type" : "boolean"
+    }, {
+      "id" : 19,
+      "name" : "is_age_20s",
+      "required" : false,
+      "type" : "boolean"
+    }, {
+      "id" : 20,
+      "name" : "is_age_30s",
+      "required" : false,
+      "type" : "boolean"
+    }, {
+      "id" : 21,
+      "name" : "is_age_40s",
+      "required" : false,
+      "type" : "boolean"
+    }, {
+      "id" : 22,
+      "name" : "is_age_50s",
+      "required" : false,
+      "type" : "boolean"
+    }, {
+      "id" : 23,
+      "name" : "is_age_senior",
+      "required" : false,
+      "type" : "boolean"
+    }, {
+      "id" : 24,
+      "name" : "list_of_airbag_deployed",
+      "required" : false,
+      "type" : {
+        "type" : "list",
+        "element-id" : 33,
+        "element" : "string",
+        "element-required" : false
+      }
+    }, {
+      "id" : 25,
+      "name" : "vehicle_uses",
+      "required" : false,
+      "type" : {
+        "type" : "list",
+        "element-id" : 34,
+        "element" : "string",
+        "element-required" : false
+      }
+    }, {
+      "id" : 26,
+      "name" : "vehicle_makes",
+      "required" : false,
+      "type" : {
+        "type" : "list",
+        "element-id" : 35,
+        "element" : "string",
+        "element-required" : false
+      }
+    }, {
+      "id" : 27,
+      "name" : "fire_happened",
+      "required" : false,
+      "type" : "boolean"
+    }, {
+      "id" : 28,
+      "name" : "hazmat_involved",
+      "required" : false,
+      "type" : "boolean"
+    }, {
+      "id" : 29,
+      "name" : "total_people_involved",
+      "required" : false,
+      "type" : "int"
+    }, {
+      "id" : 30,
+      "name" : "crashes_set_sketch",
+      "required" : false,
+      "type" : "binary"
+    } ]
+  } ],
+  "default-spec-id" : 0,
+  "partition-specs" : [ {
+    "spec-id" : 0,
+    "fields" : [ {
+      "name" : "crash_day_day",
+      "transform" : "day",
+      "source-id" : 1,
+      "field-id" : 1000
+    } ]
+  } ],
+  "last-partition-id" : 1000,
+  "default-sort-order-id" : 0,
+  "sort-orders" : [ {
+    "order-id" : 0,
+    "fields" : [ ]
+  } ],
+  "properties" : {
+    "owner" : "vishnuch",
+    "write.parquet.compression-codec" : "zstd"
+  },
+  "current-snapshot-id" : 3303943948096215032,
+  "refs" : {
+    "main" : {
+      "snapshot-id" : 3303943948096215032,
+      "type" : "branch"
+    }
+  },
+  "snapshots" : [ {
+    "sequence-number" : 1,
+    "snapshot-id" : 3303943948096215032,
+    "timestamp-ms" : 1750651375560,
+    "summary" : {
+      "operation" : "overwrite",
+      "spark.app.id" : "local-1750651365154",
+      "replace-partitions" : "true",
+      "added-data-files" : "2",
+      "added-records" : "249",
+      "added-files-size" : "29923",
+      "changed-partition-count" : "2",
+      "total-records" : "249",
+      "total-files-size" : "29923",
+      "total-data-files" : "2",
+      "total-delete-files" : "0",
+      "total-position-deletes" : "0",
+      "total-equality-deletes" : "0",
+      "engine-version" : "3.5.2",
+      "app-id" : "local-1750651365154",
+      "engine-name" : "spark",
+      "iceberg-version" : "Apache Iceberg 1.8.1 (commit 9ce0fcf0af7becf25ad9fc996c3bad2afdcfd33d)"
+    },
+    "manifest-list" : "/Users/vishnuch/work/gitcode/bytespireio/streamlana/data/iceberg_crashes/db/crashes_cube/metadata/snap-3303943948096215032-1-eb81802b-fbf5-4c3d-a27b-8efed3507e67.avro",
+    "schema-id" : 0
+  } ],
+  "statistics" : [ ],
+  "partition-statistics" : [ ],
+  "snapshot-log" : [ {
+    "timestamp-ms" : 1750651375560,
+    "snapshot-id" : 3303943948096215032
+  } ],
+  "metadata-log" : [ {
+    "timestamp-ms" : 1750651375187,
+    "metadata-file" : "/Users/vishnuch/work/gitcode/bytespireio/streamlana/data/iceberg_crashes/db/crashes_cube/metadata/v1.metadata.json"
+  } ]
+}
