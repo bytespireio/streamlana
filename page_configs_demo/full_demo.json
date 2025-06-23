@@ -145,7 +145,7 @@
             },
             "widgets": [
                 {
-                    "widget_enabled": false,
+                    "widget_enabled": true,
                     "type": "metric",
                     "query": "WITH total AS ( SELECT crash_day, Estimate_sketch(Union_sketches(List(crashes_set_sketch))) AS total_crashes FROM crash_cube() WHERE is_am IN __is_am_filter__ AND crash_day >= '__start_date_filter__' AND crash_day <= '__end_date_filter__' GROUP BY crash_day), drunk AS ( SELECT crash_day, estimate_sketch(union_sketches(list(crashes_set_sketch))) AS drunk_crashes FROM crash_cube() WHERE is_drunk = true AND is_am IN __is_am_filter__ AND crash_day >= '__start_date_filter__' AND crash_day <= '__end_date_filter__' GROUP BY crash_day) SELECT t.crash_day, t.total_crashes, COALESCE(d.drunk_crashes, 0) AS drunk_crashes, round(100.0 * COALESCE(d.drunk_crashes, 0) / t.total_crashes, 2) AS percent_drunk FROM total t LEFT JOIN drunk d ON t.crash_day = d.crash_day ORDER BY t.crash_day;",
                     "config": {
@@ -154,7 +154,7 @@
                     }
                 },
                 {
-                    "widget_enabled": false,
+                    "widget_enabled": true,
                     "type": "metric",
                     "query": "WITH total AS ( SELECT crash_day, Estimate_sketch(Union_sketches(List(crashes_set_sketch))) AS total_crashes FROM crash_cube() WHERE is_am IN __is_am_filter__ AND crash_day >= '__start_date_filter__' AND crash_day <= '__end_date_filter__' GROUP BY crash_day), behaviour AS ( SELECT crash_day, estimate_sketch(union_sketches(list(crashes_set_sketch))) AS behaviour_crashes FROM crash_cube() WHERE is_cell_phone_use = true AND is_am IN __is_am_filter__ AND crash_day >= '__start_date_filter__' AND crash_day <= '__end_date_filter__' GROUP BY crash_day) SELECT t.crash_day, t.total_crashes, COALESCE(d.behaviour_crashes, 0) AS behaviour_crashes, round(100.0 * COALESCE(d.behaviour_crashes, 0) / t.total_crashes, 2) AS percent_cell_phone_use FROM total t LEFT JOIN behaviour d ON t.crash_day = d.crash_day ORDER BY t.crash_day;",
                     "config": {
@@ -163,7 +163,7 @@
                     }
                 },
                 {
-                    "widget_enabled": false,
+                    "widget_enabled": true,
                     "type": "metric",
                     "query": "WITH total AS ( SELECT crash_day, Estimate_sketch(Union_sketches(List(crashes_set_sketch))) AS total_crashes FROM crash_cube() WHERE is_am IN __is_am_filter__ AND crash_day >= '__start_date_filter__' AND crash_day <= '__end_date_filter__' GROUP BY crash_day), behaviour AS ( SELECT crash_day, estimate_sketch(union_sketches(list(crashes_set_sketch))) AS behaviour_crashes FROM crash_cube() WHERE is_hit_run = true AND is_am IN __is_am_filter__ AND crash_day >= '__start_date_filter__' AND crash_day <= '__end_date_filter__' GROUP BY crash_day) SELECT t.crash_day, t.total_crashes, COALESCE(d.behaviour_crashes, 0) AS behaviour_crashes, round(100.0 * COALESCE(d.behaviour_crashes, 0) / t.total_crashes, 2) AS percent_is_hit_run FROM total t LEFT JOIN behaviour d ON t.crash_day = d.crash_day ORDER BY t.crash_day;",
                     "config": {
