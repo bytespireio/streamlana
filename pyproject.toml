@@ -5,7 +5,7 @@ description = "Business Intelligence as Configuration"
 authors = ["vishnu rao"]
 license = "mit license"
 readme = "README.md"
-package-mode = false
+#package-mode = false
 
 [tool.poetry.dependencies]
 python = "^3.11"
@@ -43,3 +43,4 @@ description = "Business Intelligence as Configuration"
 authors = [
   { name = "vishnu rao", email = "bytespireio@gmail.com" }]
 readme = "README.md"
+dependencies = {file = ["requirements.txt"]}
