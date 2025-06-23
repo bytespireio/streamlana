@@ -106,7 +106,7 @@
             "with_expander": null,
             "widgets": [
                 {
-                    "widget_enabled" : false,
+                    "widget_enabled" : true,
                     "type": "line_chart",
                     "query": "SELECT crash_day,estimate_sketch(union_sketches(sketches)) AS total_crashes from (SELECT crash_day, list(crashes_set_sketch) as sketches FROM crash_cube() where is_am in __is_am_filter__ and crash_day >= '__start_date_filter__' and  crash_day <= '__end_date_filter__' group by crash_day order by crash_day) order by crash_day",
                     "config": {
