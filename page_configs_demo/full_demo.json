@@ -188,7 +188,7 @@
                 {
                     "type": "map",
                     "widget_enabled" : true,
-                    "query": "SELECT lat, lon FROM crash_cube() where lat IS NOT NULL AND lon IS NOT NULL  AND NOT isnan(lat) AND NOT isnan(lon) and is_am in __is_am_filter__ and crash_day >= '__start_date_filter__' and  crash_day <= '__end_date_filter__' limit 20",
+                    "query": "SELECT lat, lon FROM crash_cube() where lat IS NOT NULL AND lon IS NOT NULL  AND NOT isnan(lat) AND NOT isnan(lon) and is_am in __is_am_filter__ and crash_day >= '__start_date_filter__' and  crash_day <= '__end_date_filter__' limit 50",
                     "config": {
                         "color": "#e30712",
                         "latitude": "lat",
@@ -216,7 +216,7 @@
             "widgets": [
                 {
                     "type": "bar_chart",
-                    "widget_enabled" : false,
+                    "widget_enabled" : true,
                     "query": "SELECT weather_condition, Estimate_sketch(Union_sketches(sketches)) AS total_crashes FROM (SELECT weather_condition, List(crashes_set_sketch) AS sketches FROM crash_cube() WHERE is_am IN __is_am_filter__ AND crash_day >= '__start_date_filter__' AND crash_day <= '__end_date_filter__' GROUP BY weather_condition ORDER BY weather_condition) ORDER BY weather_condition",
                     "config": {
                         "x": "weather_condition",
@@ -234,7 +234,7 @@
                 },
                 {
                     "type": "pie_chart",
-                    "widget_enabled" : false,
+                    "widget_enabled" : true,
                     "query": "SELECT gender, estimate_sketch(union_sketches(sketches)) AS total_crashes FROM ( SELECT 'Male' AS gender, list(crashes_set_sketch) AS sketches FROM crash_cube() WHERE is_am in __is_am_filter__ and crash_day >= '__start_date_filter__' AND crash_day <= '__end_date_filter__' AND list_contains(list_of_gender, 'M') GROUP BY gender UNION ALL SELECT 'Female' AS gender, list(crashes_set_sketch) AS sketches FROM crash_cube() WHERE crash_day >= '__start_date_filter__' AND crash_day <= '__end_date_filter__' AND list_contains(list_of_gender, 'F') GROUP BY gender UNION ALL SELECT 'X' AS gender, list(crashes_set_sketch) AS sketches FROM crash_cube() WHERE crash_day >= '__start_date_filter__' AND crash_day <= '__end_date_filter__' AND list_contains(list_of_gender, 'X') GROUP BY gender ) ORDER BY gender;",
                     "config": {
                         "category": "gender",
@@ -249,7 +249,7 @@
                 },
                 {
                     "type": "pie_chart",
-                    "widget_enabled" : false,
+                    "widget_enabled" : true,
                     "query": "SELECT age_group, estimate_sketch(union_sketches(sketches)) AS total_crashes FROM ( SELECT 'below_5' AS age_group, list(crashes_set_sketch) AS sketches FROM crash_cube() WHERE is_am in __is_am_filter__ and crash_day >= '__start_date_filter__' AND crash_day <= '__end_date_filter__' AND is_age_below_5 GROUP BY age_group UNION ALL SELECT '10s' AS age_group, list(crashes_set_sketch) AS sketches FROM crash_cube() WHERE crash_day >= '__start_date_filter__' AND crash_day <= '__end_date_filter__' AND is_age_10s GROUP BY age_group UNION ALL SELECT '20s' AS age_group, list(crashes_set_sketch) AS sketches FROM crash_cube() WHERE crash_day >= '__start_date_filter__' AND crash_day <= '__end_date_filter__' AND is_age_20s GROUP BY age_group UNION ALL SELECT '30s' AS age_group, list(crashes_set_sketch) AS sketches FROM crash_cube() WHERE crash_day >= '__start_date_filter__' AND crash_day <= '__end_date_filter__' AND is_age_30s GROUP BY age_group UNION ALL SELECT '40s' AS age_group, list(crashes_set_sketch) AS sketches FROM crash_cube() WHERE crash_day >= '__start_date_filter__' AND crash_day <= '__end_date_filter__' AND is_age_40s GROUP BY age_group UNION ALL SELECT '50s' AS age_group, list(crashes_set_sketch) AS sketches FROM crash_cube() WHERE crash_day >= '__start_date_filter__' AND crash_day <= '__end_date_filter__' AND is_age_50s GROUP BY age_group UNION ALL SELECT 'senior' AS age_group, list(crashes_set_sketch) AS sketches FROM crash_cube() WHERE crash_day >= '__start_date_filter__' AND crash_day <= '__end_date_filter__' AND is_age_senior GROUP BY age_group ) ORDER BY age_group;",
                     "config": {
                         "category": "age_group",
@@ -272,7 +272,7 @@
             "widgets_vertical_alignment": "top",
             "widgets": [
                 {
-                    "widget_enabled" : false,
+                    "widget_enabled" : true,
                     "type": "markdown",
                     "config": {
                         "body": "refer [github](https://github.com/bytespireio/streamlana/blob/main/page_configs_demo/full_demo.json)"
