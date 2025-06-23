@@ -1,12 +1,12 @@
 {
-    "page_title": "",
+    "page_title": "Streamlana - Business Intelligence as Configuration",
     "page_rows": [
         {
-            "widgets_width_spec": [0.5, 0.1, 0.1,0.3],
+            "widgets_width_spec": [0.59, 0.01, 0.1,0.3],
             "with_expander": null,
             "widgets": [
                 {
-                    "type": "title",
+                    "type": "header",
                     "config": {
                         "body": "Chicago Car Crashes",
                         "help": "https://data.cityofchicago.org/Transportation/Traffic-Crashes-Crashes/85ca-t3if/about_data"

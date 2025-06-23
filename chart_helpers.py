@@ -703,3 +703,22 @@ def render_area_chart(
         height=config_dict.get("height", 0),
         use_container_width=config_dict.get("use_container_width", True),
     )
+
+def render_header(df, config_dict: dict):
+    """
+    Render a header using Streamlit's st.header with configuration parameters.
+
+    Parameters:
+    - config_dict (dict): Configuration dictionary containing:
+        - body (str): The header text.
+        - anchor (str): Optional anchor for the header.
+        - help (str): Optional help text.
+        - divider (bool): Whether to show a divider below the header.
+    """
+    logging.info("Rendering header chart with configuration: %s", config_dict)
+    st.header(
+        body=config_dict.get("body", "Plz set header"),
+        anchor=config_dict.get("anchor", False),
+        help=config_dict.get("help"),
+        divider=config_dict.get("divider", False),
+    )
