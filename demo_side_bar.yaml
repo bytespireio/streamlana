@@ -2,7 +2,7 @@ side_bar:
   - heading: "🐙Demo"
     pages:
       - name: "Chicago City Crashes"
-        enabled: False
+        enabled: True
         config_file_path: "page_configs_demo/full_demo.json"
       - name: "How was this made?"
         enabled: True
