@@ -46,5 +46,15 @@ con.create_function(
 )
 con.create_function("estimate_sketch", estimate_sketch, [BLOB], return_type=DOUBLE)
 
+#macro for iceberg. easy on the eye while reading sql.
+con.execute(
+    """
+    CREATE MACRO crash_cube() AS table (
+  SELECT * FROM iceberg_scan('data/iceberg_crashes/db/crashes_cube', allow_moved_paths = true,version = '?')
+);
+"""
+)
+con.execute("SET unsafe_enable_version_guessing = true;")
+
 # ✅ Render side bar pages based on the configuration
 render_side_bar_pages(side_bar_config, con)
