@@ -33,3 +33,12 @@ build-backend = "poetry.core.masonry.api"
 include = ["."]
 from = "."
 exclude = []
+
+[project]
+name = "streamlana"
+version = "0.1.0"
+license = "Mit License"
+description = "Business Intelligence as Configuration"
+authors = [
+  { name = "vishnu rao", email = "bytespireio@gmail.com" }]
+readme = "README.md"
