@@ -106,6 +106,7 @@
             "with_expander": null,
             "widgets": [
                 {
+                    "widget_enabled" : false,
                     "type": "line_chart",
                     "query": "SELECT crash_day,estimate_sketch(union_sketches(sketches)) AS total_crashes from (SELECT crash_day, list(crashes_set_sketch) as sketches FROM crash_cube() where is_am in __is_am_filter__ and crash_day >= '__start_date_filter__' and  crash_day <= '__end_date_filter__' group by crash_day order by crash_day) order by crash_day",
                     "config": {
@@ -144,7 +145,7 @@
             },
             "widgets": [
                 {
-                    "widget_enabled": true,
+                    "widget_enabled": false,
                     "type": "metric",
                     "query": "WITH total AS ( SELECT crash_day, Estimate_sketch(Union_sketches(List(crashes_set_sketch))) AS total_crashes FROM crash_cube() WHERE is_am IN __is_am_filter__ AND crash_day >= '__start_date_filter__' AND crash_day <= '__end_date_filter__' GROUP BY crash_day), drunk AS ( SELECT crash_day, estimate_sketch(union_sketches(list(crashes_set_sketch))) AS drunk_crashes FROM crash_cube() WHERE is_drunk = true AND is_am IN __is_am_filter__ AND crash_day >= '__start_date_filter__' AND crash_day <= '__end_date_filter__' GROUP BY crash_day) SELECT t.crash_day, t.total_crashes, COALESCE(d.drunk_crashes, 0) AS drunk_crashes, round(100.0 * COALESCE(d.drunk_crashes, 0) / t.total_crashes, 2) AS percent_drunk FROM total t LEFT JOIN drunk d ON t.crash_day = d.crash_day ORDER BY t.crash_day;",
                     "config": {
@@ -153,7 +154,7 @@
                     }
                 },
                 {
-                    "widget_enabled": true,
+                    "widget_enabled": false,
                     "type": "metric",
                     "query": "WITH total AS ( SELECT crash_day, Estimate_sketch(Union_sketches(List(crashes_set_sketch))) AS total_crashes FROM crash_cube() WHERE is_am IN __is_am_filter__ AND crash_day >= '__start_date_filter__' AND crash_day <= '__end_date_filter__' GROUP BY crash_day), behaviour AS ( SELECT crash_day, estimate_sketch(union_sketches(list(crashes_set_sketch))) AS behaviour_crashes FROM crash_cube() WHERE is_cell_phone_use = true AND is_am IN __is_am_filter__ AND crash_day >= '__start_date_filter__' AND crash_day <= '__end_date_filter__' GROUP BY crash_day) SELECT t.crash_day, t.total_crashes, COALESCE(d.behaviour_crashes, 0) AS behaviour_crashes, round(100.0 * COALESCE(d.behaviour_crashes, 0) / t.total_crashes, 2) AS percent_cell_phone_use FROM total t LEFT JOIN behaviour d ON t.crash_day = d.crash_day ORDER BY t.crash_day;",
                     "config": {
@@ -162,7 +163,7 @@
                     }
                 },
                 {
-                    "widget_enabled": true,
+                    "widget_enabled": false,
                     "type": "metric",
                     "query": "WITH total AS ( SELECT crash_day, Estimate_sketch(Union_sketches(List(crashes_set_sketch))) AS total_crashes FROM crash_cube() WHERE is_am IN __is_am_filter__ AND crash_day >= '__start_date_filter__' AND crash_day <= '__end_date_filter__' GROUP BY crash_day), behaviour AS ( SELECT crash_day, estimate_sketch(union_sketches(list(crashes_set_sketch))) AS behaviour_crashes FROM crash_cube() WHERE is_hit_run = true AND is_am IN __is_am_filter__ AND crash_day >= '__start_date_filter__' AND crash_day <= '__end_date_filter__' GROUP BY crash_day) SELECT t.crash_day, t.total_crashes, COALESCE(d.behaviour_crashes, 0) AS behaviour_crashes, round(100.0 * COALESCE(d.behaviour_crashes, 0) / t.total_crashes, 2) AS percent_is_hit_run FROM total t LEFT JOIN behaviour d ON t.crash_day = d.crash_day ORDER BY t.crash_day;",
                     "config": {
@@ -186,6 +187,7 @@
             "widgets": [
                 {
                     "type": "map",
+                    "widget_enabled" : false,
                     "query": "SELECT lat, lon FROM crash_cube() where lat IS NOT NULL AND lon IS NOT NULL  AND NOT isnan(lat) AND NOT isnan(lon) and is_am in __is_am_filter__ and crash_day >= '__start_date_filter__' and  crash_day <= '__end_date_filter__'",
                     "config": {
                         "color": "#e30712",
@@ -214,6 +216,7 @@
             "widgets": [
                 {
                     "type": "bar_chart",
+                    "widget_enabled" : false,
                     "query": "SELECT weather_condition, Estimate_sketch(Union_sketches(sketches)) AS total_crashes FROM (SELECT weather_condition, List(crashes_set_sketch) AS sketches FROM crash_cube() WHERE is_am IN __is_am_filter__ AND crash_day >= '__start_date_filter__' AND crash_day <= '__end_date_filter__' GROUP BY weather_condition ORDER BY weather_condition) ORDER BY weather_condition",
                     "config": {
                         "x": "weather_condition",
@@ -231,6 +234,7 @@
                 },
                 {
                     "type": "pie_chart",
+                    "widget_enabled" : false,
                     "query": "SELECT gender, estimate_sketch(union_sketches(sketches)) AS total_crashes FROM ( SELECT 'Male' AS gender, list(crashes_set_sketch) AS sketches FROM crash_cube() WHERE is_am in __is_am_filter__ and crash_day >= '__start_date_filter__' AND crash_day <= '__end_date_filter__' AND list_contains(list_of_gender, 'M') GROUP BY gender UNION ALL SELECT 'Female' AS gender, list(crashes_set_sketch) AS sketches FROM crash_cube() WHERE crash_day >= '__start_date_filter__' AND crash_day <= '__end_date_filter__' AND list_contains(list_of_gender, 'F') GROUP BY gender UNION ALL SELECT 'X' AS gender, list(crashes_set_sketch) AS sketches FROM crash_cube() WHERE crash_day >= '__start_date_filter__' AND crash_day <= '__end_date_filter__' AND list_contains(list_of_gender, 'X') GROUP BY gender ) ORDER BY gender;",
                     "config": {
                         "category": "gender",
@@ -245,6 +249,7 @@
                 },
                 {
                     "type": "pie_chart",
+                    "widget_enabled" : false,
                     "query": "SELECT age_group, estimate_sketch(union_sketches(sketches)) AS total_crashes FROM ( SELECT 'below_5' AS age_group, list(crashes_set_sketch) AS sketches FROM crash_cube() WHERE is_am in __is_am_filter__ and crash_day >= '__start_date_filter__' AND crash_day <= '__end_date_filter__' AND is_age_below_5 GROUP BY age_group UNION ALL SELECT '10s' AS age_group, list(crashes_set_sketch) AS sketches FROM crash_cube() WHERE crash_day >= '__start_date_filter__' AND crash_day <= '__end_date_filter__' AND is_age_10s GROUP BY age_group UNION ALL SELECT '20s' AS age_group, list(crashes_set_sketch) AS sketches FROM crash_cube() WHERE crash_day >= '__start_date_filter__' AND crash_day <= '__end_date_filter__' AND is_age_20s GROUP BY age_group UNION ALL SELECT '30s' AS age_group, list(crashes_set_sketch) AS sketches FROM crash_cube() WHERE crash_day >= '__start_date_filter__' AND crash_day <= '__end_date_filter__' AND is_age_30s GROUP BY age_group UNION ALL SELECT '40s' AS age_group, list(crashes_set_sketch) AS sketches FROM crash_cube() WHERE crash_day >= '__start_date_filter__' AND crash_day <= '__end_date_filter__' AND is_age_40s GROUP BY age_group UNION ALL SELECT '50s' AS age_group, list(crashes_set_sketch) AS sketches FROM crash_cube() WHERE crash_day >= '__start_date_filter__' AND crash_day <= '__end_date_filter__' AND is_age_50s GROUP BY age_group UNION ALL SELECT 'senior' AS age_group, list(crashes_set_sketch) AS sketches FROM crash_cube() WHERE crash_day >= '__start_date_filter__' AND crash_day <= '__end_date_filter__' AND is_age_senior GROUP BY age_group ) ORDER BY age_group;",
                     "config": {
                         "category": "age_group",
@@ -267,6 +272,7 @@
             "widgets_vertical_alignment": "top",
             "widgets": [
                 {
+                    "widget_enabled" : false,
                     "type": "markdown",
                     "config": {
                         "body": "refer [github](https://github.com/bytespireio/streamlana/blob/main/page_configs_demo/full_demo.json)"
