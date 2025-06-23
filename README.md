@@ -136,6 +136,7 @@ Currently, we support the following widgets:
 - st.map
 - st.empty
 - st.selectbox
+- st.header
 
 Adding new widgets is easy, just add a new widget type in the `chart_helpers.py`.
 
