@@ -43,4 +43,4 @@ description = "Business Intelligence as Configuration"
 authors = [
   { name = "vishnu rao", email = "bytespireio@gmail.com" }]
 readme = "README.md"
-dependencies = {file = ["requirements.txt"]}
+#dependencies = {file = ["requirements.txt"]}
