@@ -1,0 +1,76 @@
+{
+    "page_title": "Warning + Use of Empty",
+    "page_rows": [
+        {
+            "note": "there are 2 empty widgets, 1 on the left of each warning",
+            "widgets_width_spec": [
+                0.2,
+                0.3,
+                0.2,
+                0.3
+            ],
+            "widgets_border": false,
+            "with_expander": null,
+            "widgets_gap": "small",
+            "widgets_vertical_alignment": "top",
+            "widgets": [
+                {
+                    "type": "rendering_failure",
+                    "query": "SELECT E'⚠ Network Error.\n\nCheck logs' AS message;"
+                },
+                {
+                    "type": "empty"
+                },
+                {
+                    "type": "rendering_failure",
+                    "query": "SELECT E'⚠ Memory Error.\n\nCheck logs' AS message;"
+                },
+                {
+                    "type": "empty"
+                }
+            ]
+        },
+        {
+            "widgets_width_spec": [
+                1
+            ],
+            "widgets_border": true,
+            "with_expander": {
+                "label": "The configuration for the above Row...",
+                "expanded": false
+            },
+            "widgets_gap": "small",
+            "widgets_vertical_alignment": "top",
+            "widgets": [
+                {
+                    "type": "json",
+                    "config": {
+                        "expanded": true,
+                        "note": "the configuration keys are same as st.json",
+                        "body": " {\n            \"note\" : \"there are 2 empty widgets, 1 on the left of each warning\",\n            \"widgets_width_spec\": [0.2,0.3,0.2,0.3],\n            \"widgets_border\": false,\n            \"with_expander\": null,\n            \"widgets_gap\": \"small\",\n            \"widgets_vertical_alignment\": \"top\",\n            \"widgets\": [\n                 {\n                    \"type\": \"rendering_failure\",\n                    \"query\" : \"SELECT E'⚠ Network Error.\\\n\\\nCheck logs' AS message;\"\n                },{\"type\" : \"empty\"},\n                 {\n                    \"type\": \"rendering_failure\",\n                    \"query\" : \"SELECT E'⚠ Memory Error.\\\n\\\nCheck logs' AS message;\"\n                },\n                {\"type\" : \"empty\"}\n            ]\n        }"
+                    }
+                }
+            ]
+        },
+        {
+            "widgets_width_spec": [
+                1
+            ],
+            "widgets_border": true,
+            "with_expander": {
+                "label": "The Full Configuration for this entire page...",
+                "expanded": false
+            },
+            "widgets_gap": "small",
+            "widgets_vertical_alignment": "top",
+            "widgets": [
+                {
+                    "type": "markdown",
+                    "config": {
+                        "body": "refer [github](https://github.com/bytespireio/streamlana/blob/main/page_configs_demo/warning.json)"
+                    }
+                }
+            ]
+        }
+    ]
+}

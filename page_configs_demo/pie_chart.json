@@ -1,0 +1,74 @@
+{
+    "page_title": "Pie Chart \uD83C\uDF70",
+    "page_rows": [
+        {
+            "widgets_width_spec": [
+                0.3,0.7
+            ],
+            "widgets_border": false,
+            "with_expander": null,
+            "widgets_gap": "small",
+            "widgets_vertical_alignment": "top",
+            "widgets": [
+                {
+                    "type": "pie_chart",
+                    "query": "WITH categories AS ( SELECT * FROM (VALUES ('toys'), ('clothes'), ('mobiles'), ('laptops'), ('tv') ) AS t(shopping_category) ), random_counts AS ( SELECT shopping_category, CAST(FLOOR(random() * 100 + 1) AS INTEGER) AS order_count FROM categories ) SELECT * FROM random_counts ORDER BY order_count DESC;",
+                    "config": {
+                        "category": "shopping_category",
+                        "value": "order_count",
+                        "title": "Distribution by Shopping Category",
+                        "color_discrete_sequence": [
+                            "#1f77b4",
+                            "#ff7f0e",
+                            "#2ca02c"
+                        ]
+                    }
+                },{
+                    "type" :"empty"
+                }
+            ]
+        },
+        {
+            "widgets_width_spec": [
+                1
+            ],
+            "widgets_border": true,
+            "with_expander": {
+                "label": "The configuration for the above json Row...",
+                "expanded": false
+            },
+            "widgets_gap": "small",
+            "widgets_vertical_alignment": "top",
+            "widgets": [
+                {
+                    "type": "json",
+                    "config": {
+                        "expanded": true,
+                        "note": "the configuration keys are same as st.json",
+                        "body": "{\n            \"widgets_width_spec\": [\n                0.3,0.7\n            ],\n            \"widgets_border\": false,\n            \"with_expander\": null,\n            \"widgets_gap\": \"small\",\n            \"widgets_vertical_alignment\": \"top\",\n            \"widgets\": [\n                {\n                    \"type\": \"pie_chart\",\n                    \"query\": \"WITH categories AS ( SELECT * FROM (VALUES ('toys'), ('clothes'), ('mobiles'), ('laptops'), ('tv') ) AS t(shopping_category) ), random_counts AS ( SELECT shopping_category, CAST(FLOOR(random() * 100 + 1) AS INTEGER) AS order_count FROM categories ) SELECT * FROM random_counts ORDER BY order_count DESC;\",\n                    \"config\": {\n                        \"category\": \"shopping_category\",\n                        \"value\": \"order_count\",\n                        \"title\": \"Distribution by Shopping Category\",\n                        \"color_discrete_sequence\": [\n                            \"#1f77b4\",\n                            \"#ff7f0e\",\n                            \"#2ca02c\"\n                        ]\n                    }\n                },{\n                    \"type\" :\"empty\"\n                }\n            ]\n        }"
+                    }
+                }
+            ]
+        },
+        {
+            "widgets_width_spec": [
+                1
+            ],
+            "widgets_border": true,
+            "with_expander": {
+                "label": "The Full Configuration for this entire page...",
+                "expanded": false
+            },
+            "widgets_gap": "small",
+            "widgets_vertical_alignment": "top",
+            "widgets": [
+                {
+                    "type": "markdown",
+                    "config": {
+                        "body": "refer [github](https://github.com/bytespireio/streamlana/blob/main/page_configs_demo/pie_chart.json)"
+                    }
+                }
+            ]
+        }
+    ]
+}

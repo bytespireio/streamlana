@@ -1,0 +1,73 @@
+{
+    "page_title": "Map",
+    "page_rows": [
+        {
+            "widgets_width_spec": [
+                1
+            ],
+            "widgets_border": true,
+            "with_expander": null,
+            "widgets_gap": "small",
+            "widgets_vertical_alignment": "top",
+            "widgets": [
+               {
+                    "type": "map",
+                    "query": "SELECT * FROM (VALUES (28.6139, 77.2090), (19.0760, 72.8777), (12.9716, 77.5946), (13.0827, 80.2707), (22.5726, 88.3639), (17.3850, 78.4867), (18.5204, 73.8567), (26.9124, 75.7873), (26.8467, 80.9462), (30.7333, 76.7794) ) AS t(lat, lon);",
+                    "config": {
+                        "color": "#e30712",
+                        "latitude": "lat",
+                        "size": 100,
+                        "longitude": "lon",
+                        "columns": [
+                            "lat",
+                            "lon"
+                        ],
+                      "zoom" : 2
+                    }
+                }
+            ]
+        },
+        {
+            "widgets_width_spec": [
+                1
+            ],
+            "widgets_border": true,
+            "with_expander": {
+                "label": "The configuration for the above json Row...",
+                "expanded": false
+            },
+            "widgets_gap": "small",
+            "widgets_vertical_alignment": "top",
+            "widgets": [
+                {
+                    "type": "json",
+                    "config": {
+                        "expanded": true,
+                        "note": "the configuration keys are same as st.json",
+                        "body": "{\n            \"widgets_width_spec\": [\n                1\n            ],\n            \"widgets_border\": true,\n            \"with_expander\": null,\n            \"widgets_gap\": \"small\",\n            \"widgets_vertical_alignment\": \"top\",\n            \"widgets\": [\n               {\n                    \"type\": \"map\",\n                    \"query\": \"SELECT * FROM (VALUES (28.6139, 77.2090), (19.0760, 72.8777), (12.9716, 77.5946), (13.0827, 80.2707), (22.5726, 88.3639), (17.3850, 78.4867), (18.5204, 73.8567), (26.9124, 75.7873), (26.8467, 80.9462), (30.7333, 76.7794) ) AS t(lat, lon);\",\n                    \"config\": {\n                        \"color\": \"#e30712\",\n                        \"latitude\": \"lat\",\n                        \"size\": 100,\n                        \"longitude\": \"lon\",\n                        \"columns\": [\n                            \"lat\",\n                            \"lon\"\n                        ],\n                      \"zoom\" : 2\n                    }\n                }\n            ]\n        }"
+                    }
+                }
+            ]
+        },
+        {
+            "widgets_width_spec": [
+                1
+            ],
+            "widgets_border": true,
+            "with_expander": {
+                "label": "The Full Configuration for this entire page...",
+                "expanded": false
+            },
+            "widgets_gap": "small",
+            "widgets_vertical_alignment": "top",
+            "widgets": [
+                {
+                    "type": "markdown",
+                    "config": {
+                        "body": "refer [github](https://github.com/bytespireio/streamlana/blob/main/page_configs_demo/map.json)"
+                    }
+                }
+            ]
+        }
+    ]
+}

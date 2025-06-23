@@ -1,0 +1,10 @@
+#hello.yaml
+side_bar:
+  - heading: "Hello StreamLana"
+    pages:
+      - name: "Stats page"
+        enabled: True
+        config_file_path: "page_configs_demo/hello.json"
+      - name: "About page"
+        config_file_path:  "page_configs_demo/about.json"
+        enabled: True

@@ -1,0 +1,58 @@
+side_bar:
+  - heading: "🐙Demo"
+    pages:
+      - name: "Chicago City Crashes"
+        enabled: True
+        config_file_path: "page_configs_demo/full_demo.json"
+      - name: "How was this made?"
+        enabled: True
+        code_definition: "page_modules/how.py"
+      - name: "About StreamLana"
+        enabled: True
+        code_definition: "page_modules/about.py"
+
+  - heading: "🐙Widget Gallery"
+    pages:
+      - name: "Title / Markdown"
+        enabled: True
+        config_file_path: "page_configs_demo/title_markdown.json"
+      - name: "Date Input as Filter"
+        enabled: True
+        config_file_path: "page_configs_demo/date_input.json"
+      - name: "DataFrame"
+        enabled: True
+        config_file_path: "page_configs_demo/dataframe.json"
+      - name: "Json"
+        enabled: True
+        config_file_path: "page_configs_demo/json.json"
+      - name: "Warning / Empty"
+        enabled: True
+        config_file_path: "page_configs_demo/warning.json"
+      - name: "Line chart"
+        enabled: True
+        config_file_path: "page_configs_demo/line_chart.json"
+      - name: "Bar chart"
+        enabled: True
+        config_file_path: "page_configs_demo/bar_chart.json"
+      - name: "Pie chart"
+        enabled: True
+        config_file_path: "page_configs_demo/pie_chart.json"
+      - name: "Area chart"
+        enabled: True
+        config_file_path: "page_configs_demo/area_chart.json"
+      - name: "Map chart"
+        enabled: True
+        config_file_path: "page_configs_demo/map.json"
+  - heading: "🐙Other Features"
+    pages:
+      - name: "Sometimes code is needed"
+        enabled: True
+        code_definition: "page_modules/using_code.py"
+      - name: "Anonymous Page Id"
+        enabled: True
+        anonymous: True
+        code_definition: "page_modules/anonymous.py"
+      - name: "Disable a Specific Widget"
+        enabled: True
+        config_file_path: "page_configs_demo/disabled.json"
+
