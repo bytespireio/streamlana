@@ -3,8 +3,8 @@ import logging
 
 import duckdb
 
-import side_bar_util
-from side_bar_util import load_side_bar_config_yaml, render_side_bar_pages
+from streamlana import side_bar_util
+from streamlana.side_bar_util import load_side_bar_config_yaml, render_side_bar_pages
 
 # ✅ First thing to do, set page layout of streamlit
 side_bar_util.set_page_layout(layout="wide")
