@@ -5,18 +5,19 @@ import logging
 import os
 import traceback
 from typing import Callable, Literal
+from importlib.resources import files
 
 import duckdb
 import streamlit as st
 from streamlit.commands.page_config import InitialSideBarState, Layout
 
-import chart_helpers
-from envs import (
+from streamlana import chart_helpers
+from streamlana.envs import (
     STREAMLANA_DEBUG_DF,
     STREAMLANA_DEBUG_STATE,
     STREAMLANA_URL_PG_NAME_PREFIX,
 )
-from util import substitute_placeholders
+from streamlana.util import substitute_placeholders
 
 
 def debug_df(df):
@@ -45,12 +46,14 @@ def short_hash(s, length=8):
     return hashlib.sha256(s.encode()).hexdigest()[:length]
 
 
-def set_markdown_with_icon(icon_path: str = "streamlana.ico", markdown_style: str = ""):
+def set_markdown_with_icon(icon_path: str = None, markdown_style: str = ""):
     """
     Set the favicon for the Streamlit application.
 
     :param icon_path: Path to the icon file.
     """
+    if icon_path is None:
+        icon_path = files("streamlana").joinpath("streamlana.ico")
     with open(icon_path, "rb") as icon_file:
         encoded = base64.b64encode(icon_file.read()).decode()
     favicon_data_url = f"data:image/x-icon;base64,{encoded}"
@@ -134,9 +137,9 @@ def render_side_bar_pages(
     side_bar_config: dict,
     duckbdb_conn,
     markdown_style: str = "",
-    logo_path: str = "streamlana.png",
+    logo_path: str = None,
     logo_size: Literal["small", "medium", "large"] = "large",
-    icon="streamlana.ico",
+    icon=None,
     check_user_access: Callable[[], str] = default_check_user_access,
 ):
     """Render sidebar pages based on the provided configuration.
@@ -172,6 +175,9 @@ def render_side_bar_pages(
         st.session_state.selected_page = None
 
     set_markdown_with_icon(icon_path=icon, markdown_style=markdown_style)
+
+    if logo_path == "" or logo_path is None:
+        logo_path = files("streamlana").joinpath("streamlana.png")
 
     st.logo(logo_path, size=logo_size)
 
@@ -239,7 +245,7 @@ def render_side_bar_pages(
 
 def set_page_layout(
     page_title="StreamLana",
-    page_icon="streamlana.ico",
+    page_icon=None,
     layout: Layout = "wide",
     initial_sidebar_state: InitialSideBarState = "expanded",
 ):
@@ -247,6 +253,9 @@ def set_page_layout(
     Set the  Length of Width distribution arraypage layout for Streamlit application.
     call it only once. at the top of your application.
     """
+    if page_icon is None:
+        page_icon = files("streamlana").joinpath("streamlana.ico")
+
     if "_layout" not in st.session_state:
         st.session_state._layout = layout
     st.set_page_config(

@@ -91,11 +91,11 @@ Lets keep this simple 1 widget and 1 row -> **`page_configs_demo/about.json`**
 ```
 5. Few lines of code for the main app ->  **`hello.py`**
 ```python
-#hello.py
+# hello.py
 import logging
 import duckdb
-import side_bar_util
-from side_bar_util import load_side_bar_config_yaml, render_side_bar_pages
+from streamlana import side_bar_util
+from streamlana.side_bar_util import load_side_bar_config_yaml, render_side_bar_pages
 
 # ✅ First thing to do, set page layout of streamlit
 side_bar_util.set_page_layout(layout="wide")
@@ -111,6 +111,7 @@ con = duckdb.connect()
 
 # ✅ Render side bar pages based on the configuration
 render_side_bar_pages(side_bar_config, con)
+
 
 ```
 
@@ -136,6 +137,7 @@ Currently, we support the following widgets:
 - st.map
 - st.empty
 - st.selectbox
+- st.header
 
 Adding new widgets is easy, just add a new widget type in the `chart_helpers.py`.
 

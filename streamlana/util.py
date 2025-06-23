@@ -6,7 +6,7 @@ from zoneinfo import ZoneInfo
 import numpy as np
 import streamlit
 
-from app_state import AppState
+from streamlana.app_state import AppState
 
 
 def get_date(value, zone="UTC"):
