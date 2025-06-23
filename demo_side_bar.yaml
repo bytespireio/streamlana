@@ -1,5 +1,5 @@
 side_bar:
-  - heading: "Demo"
+  - heading: "🐙Demo"
     pages:
       - name: "Chicago City Crashes"
         enabled: True
@@ -11,7 +11,7 @@ side_bar:
         enabled: True
         code_definition: "page_modules/about.py"
 
-  - heading: "Widget Gallery"
+  - heading: "🐙Widget Gallery"
     pages:
       - name: "Title / Markdown"
         enabled: True
@@ -43,7 +43,7 @@ side_bar:
       - name: "Map chart"
         enabled: True
         config_file_path: "page_configs_demo/map.json"
-  - heading: "Other Features"
+  - heading: "🐙Other Features"
     pages:
       - name: "Sometimes code is needed"
         enabled: True
@@ -52,4 +52,7 @@ side_bar:
         enabled: True
         anonymous: True
         code_definition: "page_modules/anonymous.py"
+      - name: "Disable a Specific Widget"
+        enabled: True
+        config_file_path: "page_configs_demo/disabled.json"
 

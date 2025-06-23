@@ -1,0 +1,67 @@
+{
+    "page_title": "Disable a Widget",
+    "page_rows": [
+        {
+            "widgets": [
+                {
+                    "widget_enabled" : false,
+                    "type": "json",
+                    "config": {
+                        "expanded": true,
+                        "note": "the configuration keys are same as st.json",
+                        "body": " {\"author\" : \"Vishnu Rao\", \"speciality\": \"Cost Based Data Engineering\", \"Happy to Help out\": true}"
+                    }
+                }
+            ],
+            "widgets_width_spec": [
+                1
+            ],
+            "widgets_border": true,
+            "with_expander": null,
+            "widgets_gap": "small",
+            "widgets_vertical_alignment": "top"
+        },
+        {
+            "widgets_width_spec": [
+                1
+            ],
+            "widgets_border": true,
+            "with_expander": {
+                "label": "The configuration for the above json Row...",
+                "expanded": false
+            },
+            "widgets_gap": "small",
+            "widgets_vertical_alignment": "top",
+            "widgets": [
+                {
+                    "type": "json",
+                    "config": {
+                        "expanded": true,
+                        "note": "the configuration keys are same as st.json",
+                        "body": "{\n            \"widgets\": [\n                {\n                    \"widget_enabled\" : false,\n                    \"type\": \"json\",\n                    \"config\": {\n                        \"expanded\": true,\n                        \"note\": \"the configuration keys are same as st.json\",\n                        \"body\": \" {\\\"author\\\" : \\\"Vishnu Rao\\\", \\\"speciality\\\": \\\"Cost Based Data Engineering\\\", \\\"Happy to Help out\\\": true}\"\n                    }\n                }\n            ],\n            \"widgets_width_spec\": [\n                1\n            ],\n            \"widgets_border\": true,\n            \"with_expander\": null,\n            \"widgets_gap\": \"small\",\n            \"widgets_vertical_alignment\": \"top\"\n        }"
+                    }
+                }
+            ]
+        },
+        {
+            "widgets_width_spec": [
+                1
+            ],
+            "widgets_border": true,
+            "with_expander": {
+                "label": "The Full Configuration for this entire page...",
+                "expanded": false
+            },
+            "widgets_gap": "small",
+            "widgets_vertical_alignment": "top",
+            "widgets": [
+                {
+                    "type": "markdown",
+                    "config": {
+                        "body": "refer [github](https://github.com/bytespireio/streamlana/blob/main/page_configs_demo/disabled.json)"
+                    }
+                }
+            ]
+        }
+    ]
+}
