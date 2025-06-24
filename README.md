@@ -7,6 +7,8 @@ Think of Streamlit in Grafana style...
 
 Build your BI dashboards with ease, using simple configuration files.
 
+![Streamlana Flow](simple_explanation.jpg)
+
 ## Live App & Examples:
 
 Its deployed live at https://streamlana.streamlit.app/
