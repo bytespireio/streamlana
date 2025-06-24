@@ -1,4 +1,5 @@
 import logging
+import math
 from datetime import datetime
 from typing import Any, Callable, List, Optional, Sequence, Union
 
@@ -544,10 +545,14 @@ def render_metric(df, config_dict):
     delta_value_column_name = config_dict.get("delta_value_column", "delta")
     if df is not None and value_column_name in df.columns:
         value = df[value_column_name].iloc[0]
+        if pd.isna(value):
+            value = None
         value if isinstance(value, (str, int, float)) else str(value)
         delta = None
         if delta_value_column_name in df.columns:
             delta = df[delta_value_column_name].iloc[0]
+            if pd.isna(delta):
+                delta = None
     else:
         raise ValueError(
             f"Column 'Could not get metric from Metric result DataFrame. Check query for widget: {config_dict.get('widget_uniq_key')}."
