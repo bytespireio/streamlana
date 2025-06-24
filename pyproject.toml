@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "streamlana"
-version = "0.1.2"
+version = "0.1.3"
 description = "Business Intelligence as Configuration"
 authors = ["vishnu rao"]
 license = "mit license"
@@ -41,7 +41,7 @@ exclude = []
 
 [project]
 name = "streamlana"
-version = "0.1.2"
+version = "0.1.3"
 license = "Mit License"
 description = "Business Intelligence as Configuration"
 authors = [
