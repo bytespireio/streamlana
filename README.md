@@ -7,33 +7,40 @@ Think of Streamlit in Grafana style...
 
 Build your BI dashboards with ease, using simple configuration files.
 
-## Demo App
+## Live App & Examples:
 
 Its deployed live at https://streamlana.streamlit.app/
 
-## Lets do this
+For the live app - refer to 'demo' branch of this repo which has data in it. (streamlit run streamlana_demo.py)
+
+## Lets do Hello World app
 
 1. Install streamlana
 ```bash
 pip install streamlana
+mkdir page_configs
+touch hello_world_app.yaml
+touch hello_world_app.py
+touch page_configs/stats.json
+touch page_configs/about.json
 ```
 
-2. Define your pages in **`hello.yaml`**
+2. Define your pages in **`hello_world_app.yaml`**
 ```yaml
-#hello.yaml
+#hello_world_app.yaml
 side_bar:
   - heading: "Hello StreamLana"
     pages:
       - name: "Stats page"
         enabled: True
-        config_file_path: "page_configs_demo/hello.json"
+        config_file_path: "page_configs/stats.json"
       - name: "About page"
-        config_file_path:  "page_configs_demo/about.json"
+        config_file_path:  "page_configs/about.json"
         enabled: True
 ```
-3. Lets define page1 layout - number or rows, the widgets in each row, query powering the widget, widget settings.
+3. Lets define page1 layout - number of rows, the widgets in each row, Query powering the widget, widget settings.
 
-Lets do 1 row with 2 widgets in it -> **`page_configs_demo/hello.json`**
+Lets do 1 row with 2 widgets in it -> **`page_configs/stats.json`**
 ```json
 {
     "page_title": "Hello StreamLana",
@@ -77,7 +84,7 @@ Lets do 1 row with 2 widgets in it -> **`page_configs_demo/hello.json`**
 
 4. Lets define page2 layout - number or rows, the widgets in each row, query powering the widget, widget settings.
 
-Lets keep this simple 1 widget and 1 row -> **`page_configs_demo/about.json`** 
+Lets keep this simple 1 widget and 1 row -> **`page_configs/about.json`** 
 ```json
 {
     "page_title": "About StreamLana",
@@ -89,9 +96,9 @@ Lets keep this simple 1 widget and 1 row -> **`page_configs_demo/about.json`**
     ]
 }
 ```
-5. Few lines of code for the main app ->  **`hello.py`**
+5. Few lines of code for the main app ->  **`hello_world_app.py`**
 ```python
-# hello.py
+# hello_world_app.py
 import logging
 import duckdb
 from streamlana import side_bar_util
@@ -104,7 +111,7 @@ side_bar_util.set_page_layout(layout="wide")
 logging.basicConfig(level=logging.INFO)
 
 # ✅ Load side bar configuration from YAML file
-side_bar_config = load_side_bar_config_yaml("hello.yaml")
+side_bar_config = load_side_bar_config_yaml("hello_world_app.yaml")
 
 # ✅ Create DuckDB connection (do your setup with it)
 con = duckdb.connect()
@@ -117,7 +124,7 @@ render_side_bar_pages(side_bar_config, con)
 
 6. Run the app
 ```bash
-streamlit run hello.py
+streamlit run hello_world_app.py
 ```
 
 ## Widget Library
