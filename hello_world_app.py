@@ -17,4 +17,10 @@ side_bar_config = load_side_bar_config_yaml("hello_world_app.yaml")
 con = duckdb.connect()
 
 # ✅ Render side bar pages based on the configuration
-render_side_bar_pages(side_bar_config, con)
+try:
+    render_side_bar_pages(side_bar_config, con)
+finally:
+    # ✅ Close the DuckDB connection
+    con.close()
+    logging.info("DuckDB connection closed.")
+
