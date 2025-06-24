@@ -4,8 +4,8 @@ import json
 import logging
 import os
 import traceback
-from typing import Callable, Literal
 from importlib.resources import files
+from typing import Callable, Literal
 
 import duckdb
 import streamlit as st
