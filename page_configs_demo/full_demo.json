@@ -1,6 +1,33 @@
 {
-    "page_title": "Streamlana - Business Intelligence as Config",
+    "page_title": "",
     "page_rows": [
+         {
+            "with_expander": null,
+            "widgets_width_spec": [1],
+            "widgets": [
+                {"type": "header", "config": {"body": "Streamlana - Business Intelligence as Configuration \n\n This dashboard has been entirely built through configuration files, without custom code. [github](https://github.com/bytespireio/streamlana/) \uD83D\uDE80 \n\n(repo readme has details if u want to run this demo locally. Suggest you start off with the hello world app.)"}}
+            ]
+        },{
+            "widgets_width_spec": [
+                1
+            ],
+            "widgets_border": false,
+            "with_expander": {
+                "label": "The Full Configuration for this entire page...",
+                "expanded": false
+            },
+            "widgets_gap": "small",
+            "widgets_vertical_alignment": "top",
+            "widgets": [
+                {
+                    "widget_enabled" : true,
+                    "type": "markdown",
+                    "config": {
+                        "body": "refer [github](https://github.com/bytespireio/streamlana/blob/main/page_configs_demo/full_demo.json)"
+                    }
+                }
+            ]
+        },
         {
             "widgets_width_spec": [0.5, 0.08, 0.12,0.3],
             "with_expander": null,
@@ -256,26 +283,6 @@
                         "value": "total_crashes",
                         "title": "AgeGroups Involved in Crashes",
                         "color_discrete_sequence": null
-                    }
-                }
-            ]
-        },{
-            "widgets_width_spec": [
-                1
-            ],
-            "widgets_border": false,
-            "with_expander": {
-                "label": "The Full Configuration for this entire page...",
-                "expanded": false
-            },
-            "widgets_gap": "small",
-            "widgets_vertical_alignment": "top",
-            "widgets": [
-                {
-                    "widget_enabled" : true,
-                    "type": "markdown",
-                    "config": {
-                        "body": "refer [github](https://github.com/bytespireio/streamlana/blob/main/page_configs_demo/full_demo.json)"
                     }
                 }
             ]
