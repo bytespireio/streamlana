@@ -15,6 +15,7 @@
             "widgets": [
               {
                     "type": "dataframe",
+                    "widget_enabled": true,
                     "query": "SELECT avg_spend,order_date FROM (SELECT order_date, RANDOM() * 1000 AS avg_spend FROM generate_series(CURRENT_DATE - INTERVAL 30 DAY, CURRENT_DATE, INTERVAL 1 DAY) AS t(order_date)) as sub",
                     "config": {
                         "column_order": [
@@ -25,6 +26,7 @@
                 },
                 {
                     "type": "line_chart",
+                    "widget_enabled": true,
                     "query": "SELECT avg_spend,order_date FROM (SELECT order_date, RANDOM() * 1000 AS avg_spend FROM generate_series(CURRENT_DATE - INTERVAL 30 DAY, CURRENT_DATE, INTERVAL 1 DAY) AS t(order_date)) as sub",
                     "config": {
                         "x": "order_date",

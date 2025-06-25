@@ -35,10 +35,12 @@ side_bar:
     pages:
       - name: "Stats page"
         enabled: True
+        anonymous: False
         config_file_path: "page_configs/stats.json"
       - name: "About page"
         config_file_path:  "page_configs/about.json"
         enabled: True
+        anonymous: False
 ```
 3. Lets define page1 layout - number of rows, the widgets in each row, Query powering the widget, widget settings.
 
@@ -61,6 +63,7 @@ Lets do 1 row with 2 widgets in it -> **`page_configs/stats.json`**
             "widgets": [
               {
                     "type": "dataframe",
+                    "widget_enabled": true,
                     "query": "SELECT avg_spend,order_date FROM (SELECT order_date, RANDOM() * 1000 AS avg_spend FROM generate_series(CURRENT_DATE - INTERVAL 30 DAY, CURRENT_DATE, INTERVAL 1 DAY) AS t(order_date)) as sub",
                     "config": {
                         "column_order": [
@@ -71,6 +74,7 @@ Lets do 1 row with 2 widgets in it -> **`page_configs/stats.json`**
                 },
                 {
                     "type": "line_chart",
+                    "widget_enabled": true,
                     "query": "SELECT avg_spend,order_date FROM (SELECT order_date, RANDOM() * 1000 AS avg_spend FROM generate_series(CURRENT_DATE - INTERVAL 30 DAY, CURRENT_DATE, INTERVAL 1 DAY) AS t(order_date)) as sub",
                     "config": {
                         "x": "order_date",
@@ -135,6 +139,8 @@ streamlit run hello_world_app.py
 ## Widget Library
 
 Currently, we support the following widgets:
+(see examples with their configs in live [demo](https://streamlana.streamlit.app/))
+
 - st.dataframe
 - st.line_chart
 - st.area_chart
@@ -157,3 +163,17 @@ ex: implement 'render_<chart_name>(data:pd.DataFrame, config_dict: dict)'
 
 data comes from the duckdb sql query u configure.
 
+## The Design
+
+1. Streamlana supports Multipage app (based on st.navigation).
+2. We start off with the side bar configuration file, which defines the pages and their corresponding configuration files. 
+3. In the sidebar configuration file, each page can be enabled or disabled, and it can have a title. Optionally it can have anonymous page id. (refer to [demo](https://streamlana.streamlit.app/5ecb7dde))
+3. The page configuration file defines the layout of the page.
+4. The page layout is defined in terms of rows, each row can have multiple widgets + a page can have optional title.
+5. Each row has "widgets_width_spec", which is a list of widths for each widget in the row, summing up to 1.0 (100%) - similar to st.columns 'spec'.
+6. Each row can have "widgets_border" to add a border around the widgets in the row. (similar to st.columns with border)
+5. Each row can have a Expander (similar to st.expander) to group widgets together in the row, with optional label and expanded state. (Set to null if not needed)
+6. Each Row can have a gap between widgets, and vertical alignment of widgets. (similar to st.columns with gap and vertical alignment)
+7. Each row has a list of widgets.
+8. Each widget has a type, query (duckdb), and configuration. It can be enabled/disabled too.
+9. Most of the configuration parameters for a widget are the same as those provided by Streamlit. (see examples in live [demo](https://streamlana.streamlit.app/))

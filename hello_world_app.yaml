@@ -4,7 +4,9 @@ side_bar:
     pages:
       - name: "Stats page"
         enabled: True
+        anonymous: False
         config_file_path: "page_configs/stats.json"
       - name: "About page"
         config_file_path:  "page_configs/about.json"
         enabled: True
+        anonymous: False
