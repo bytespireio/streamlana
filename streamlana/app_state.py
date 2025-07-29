@@ -30,7 +30,9 @@ class AppState:
         return st.session_state.get(key, default_value)
 
     @classmethod
-    def clear(cls, keys=[]):
+    def clear(cls, keys=None):
+        if keys is None:
+            keys = []
         if cls._use_inmem() or st is None:
             if keys is None:
                 cls._hashmap_state_holder.clear()

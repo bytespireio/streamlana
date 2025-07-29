@@ -1,6 +1,8 @@
 # hello_world_app.py
 import logging
+
 import duckdb
+
 from streamlana import side_bar_util
 from streamlana.side_bar_util import load_side_bar_config_yaml, render_side_bar_pages
 
@@ -23,4 +25,3 @@ finally:
     # ✅ Close the DuckDB connection
     con.close()
     logging.info("DuckDB connection closed.")
-

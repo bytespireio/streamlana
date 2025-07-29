@@ -38,14 +38,14 @@ def test_substitute_placeholders():
     FROM table
     WHERE crash_date >= '2024-01-01'
       AND crash_date <= '2024-01-31'
-      AND status = 'active'  
+      AND status = 'active'
     """
     assert result.strip() == expected.strip()
 
 
 def test_get_date():
     today_dt = datetime.now(ZoneInfo("UTC")).date()
-    assert get_date(None) == None
+    assert get_date(None) is None
     assert get_date("today") == today_dt
 
     now = datetime.now(ZoneInfo("UTC"))

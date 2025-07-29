@@ -4,8 +4,8 @@ import json
 import logging
 import os
 import traceback
-from typing import Callable, Literal
 from importlib.resources import files
+from typing import Callable, Literal
 
 import duckdb
 import streamlit as st
@@ -29,7 +29,7 @@ def get_page_name_for_url(full_name: str, pg_anonymous=False) -> str:
     """Generate a URL-friendly name for the page.
     If the environment variable STREAMLANA_ANONYMOUS_PG_NAMES is set to "true",
     it will return a short hash of the full name.
-    Otherwise, it will replace spaces and dashes with underscores and convert to lowercase.
+    Otherwise, it will replace spaces and dashes with underscores and convert to lowercase.  # noqa: E501
     :param full_name: The full name of the page.
     :param pg_anonymous: If True, use a short hash for the page name.
     :return: A URL-friendly name for the page.
@@ -79,7 +79,7 @@ def auth_enabled(auth_session_state_key_name) -> bool:
     """
     Check if authentication is enabled based on session state key.
 
-    :param auth_session_state_key_name: Key name in session state to check for authentication.
+    :param auth_session_state_key_name: Key name in session state to check for authentication.  # noqa: E501
     :return: True if authentication is enabled, False otherwise.
     """
     return auth_session_state_key_name is not None
@@ -89,7 +89,7 @@ def load_side_bar_config_yaml(side_bar_config_file_path):
     """
     Load sidebar configuration from a YAML file.
 
-    :param side_bar_config_file_path: Path to the YAML file containing sidebar configuration.
+    :param side_bar_config_file_path: Path to the YAML file containing sidebar configuration.  # noqa: E501
     :return: Parsed sidebar configuration as a list of dictionaries.
     """
     import yaml
@@ -127,7 +127,7 @@ def __create_dynamic_func(
 def default_check_user_access() -> str:
     """Check if the user has access to pages.
     :param Any: Placeholder for any input
-    :return: None if not authorized, Username if allowed (return "guest" if auth disabled)
+    :return: None if not authorized, Username if allowed (return "guest" if auth disabled)  # noqa: E501
     """
     # Assuming that auth is disabled.
     return "guest"
@@ -161,12 +161,12 @@ def render_side_bar_pages(
         username = check_user_access()
         if username is None:
             logging.warning(
-                "check_user_access returned 'None' username. User is not allowed to access pages. Returning without rendering sidebar pages."
+                "check_user_access returned 'None' username. User is not allowed to access pages. Returning without rendering sidebar pages."  # noqa: E501
             )
             return
     else:
         logging.warning(
-            "check_user_access callback is None. will assume auth is disabled. username set to guest."
+            "check_user_access callback is None. will assume auth is disabled. username set to guest."  # noqa: E501
         )
 
     logging.info("username obtained from check_user_access callabck: %s", username)
@@ -203,7 +203,7 @@ def render_side_bar_pages(
             pg_anonymous = pg_section.get("anonymous", False)
             if not pg_enabled:
                 logging.info(
-                    f"Page '{name}' in section '{heading}' is disabled, skipping rendering."
+                    f"Page '{name}' in section '{heading}' is disabled, skipping rendering."  # noqa: E501
                 )
                 continue
             if name.strip() == "":
@@ -220,7 +220,7 @@ def render_side_bar_pages(
                 config_file_path = pg_section.get("config_file_path")
                 if config_file_path is None:
                     raise ValueError(
-                        f"since path to custom python module not specified for page, page config file path is required for page: '{name}'"
+                        f"since path to custom python module not specified for page, page config file path is required for page: '{name}'"  # noqa: E501
                     )
                 try:
                     with open(config_file_path, "r") as f:
@@ -262,10 +262,10 @@ def set_page_layout(
         page_title=page_title,
         page_icon=page_icon,
         layout=st.session_state._layout,  # Optional: "centered" or "wide"
-        initial_sidebar_state=initial_sidebar_state,  # Optional: "expanded" or "collapsed",
+        initial_sidebar_state=initial_sidebar_state,  # Optional: "expanded" or "collapsed",  # noqa: E501
         menu_items={
             "Get help": "https://github.com/jaihind213/streamlana",
-            "About": "Streamlit in Grafana style. Business Intelligence as Configuration",
+            "About": "Streamlit in Grafana style. Business Intelligence as Configuration",  # noqa: E501
         },
     )
 
@@ -291,7 +291,7 @@ def render_dashboard(dashboard_name: str, page_config_dict, duckbdb_conn=None):
         widgets = row.get("widgets", [])
         if len(widgets) != len(widgets_width_distribution):
             raise ValueError(
-                f"Length of 'widgets_width_spec' array: {len(widgets_width_distribution)}, does not match number of widgets: len(widgets) in row:{row_idx} of page '{dashboard_name}'."
+                f"Length of 'widgets_width_spec' array: {len(widgets_width_distribution)}, does not match number of widgets: len(widgets) in row:{row_idx} of page '{dashboard_name}'."  # noqa: E501
             )
         logging.info(
             "Rendering row in dashboard: %s ,with width distribution: %s",
@@ -324,7 +324,7 @@ def render_dashboard(dashboard_name: str, page_config_dict, duckbdb_conn=None):
             widget_enabled = widget.get("widget_enabled", True)
             if not widget_enabled:
                 logging.info(
-                    f"Widget at index {widget_idx} in row {row_idx} is disabled, skipping rendering."
+                    f"Widget at index {widget_idx} in row {row_idx} is disabled, skipping rendering."  # noqa: E501
                 )
                 chart_helpers.render_void()
                 continue
@@ -334,13 +334,13 @@ def render_dashboard(dashboard_name: str, page_config_dict, duckbdb_conn=None):
             widget_type = widget.get("type", None)
             if widget_type is None or "" == widget_type.strip():
                 raise ValueError(
-                    f"Widget type is required for widget at index {widget_idx} in row {row_idx}, dashboard: {dashboard_name}"
+                    f"Widget type is required for widget at index {widget_idx} in row {row_idx}, dashboard: {dashboard_name}"  # noqa: E501
                 )
 
             # Run the query to get a dataframe
             final_query = substitute_placeholders(query)
             logging.info(
-                f"Executing final query: {final_query} for widget type: {widget_type} with config: {config}, page_row: {row_idx}, widget_idx: {widget_idx}, dashboard: {dashboard_name}"
+                f"Executing final query: {final_query} for widget type: {widget_type} with config: {config}, page_row: {row_idx}, widget_idx: {widget_idx}, dashboard: {dashboard_name}"  # noqa: E501
             )
             # Execute the query
             if duckbdb_conn is None:
@@ -352,9 +352,9 @@ def render_dashboard(dashboard_name: str, page_config_dict, duckbdb_conn=None):
                 df = duckbdb_conn.execute(final_query).df()
                 if os.environ.get(STREAMLANA_DEBUG_DF, "false") == "true":
                     debug_df(df)
-            except Exception as e:
+            except Exception:
                 logging.error(
-                    f"Error executing query: {final_query} for widget type: {widget_type}, dashboard: {dashboard_name}, row: {row_idx}, widget_idx: {widget_idx}"
+                    f"Error executing query: {final_query} for widget type: {widget_type}, dashboard: {dashboard_name}, row: {row_idx}, widget_idx: {widget_idx}"  # noqa: E501
                 )
                 traceback.print_exc()
                 with cols[widget_idx]:
@@ -370,9 +370,9 @@ def render_dashboard(dashboard_name: str, page_config_dict, duckbdb_conn=None):
                 try:
                     with cols[widget_idx]:
                         render_fn(df, config)
-                except Exception as e:
+                except Exception:
                     logging.error(
-                        f"Error rendering widget type: {widget_type}, dashboard: {dashboard_name}, row: {row_idx}, widget_idx: {widget_idx}"
+                        f"Error rendering widget type: {widget_type}, dashboard: {dashboard_name}, row: {row_idx}, widget_idx: {widget_idx}"  # noqa: E501
                     )
                     traceback.print_exc()
                     with cols[widget_idx]:
@@ -383,5 +383,5 @@ def render_dashboard(dashboard_name: str, page_config_dict, duckbdb_conn=None):
             else:
                 with cols[widget_idx]:
                     st.error(
-                        f"Unsupported widget type: {widget_type}, dashboard: {dashboard_name}, row: {row_idx}, widget_idx: {widget_idx}"
+                        f"Unsupported widget type: {widget_type}, dashboard: {dashboard_name}, row: {row_idx}, widget_idx: {widget_idx}"  # noqa: E501
                     )

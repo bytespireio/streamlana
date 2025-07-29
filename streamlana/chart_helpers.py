@@ -82,16 +82,16 @@ def render_date_input(data, config_dict):
     The name of the columns should be specified in config_dict with keys 'start_date_column' and 'end_date_column'.
     If data is None or it does not contain the specified columns, the start/end dates displayed will be based on the 'value' key in config_dict.
     - config_dict (dict): Configuration dictionary containing:
-        - start_date_column (str): Column name for start date in data (default is 'start_date').This can be used as placeholder in sql query as '__start_date__'
-        - end_date_column (str): Column name for end date in data (default is 'end_date'). This can be used as placeholder in sql query as '__end_date__'
+        - start_date_column (str): Column name for start date in data (default is 'start_date').This can be used as placeholder in sql query as '__start_date__'  # noqa: E501
+        - end_date_column (str): Column name for end date in data (default is 'end_date'). This can be used as placeholder in sql query as '__end_date__'  # noqa: E501
         - timezone (str): Timezone to use for date calculations (default is 'UTC').
-        - value (str): array of 2 strings, the first is the label for start date and the second is the label for end date. ex: [today-7, today+1] or [today-7, today] or [today]
+        - value (str): array of 2 strings, the first is the label for start date and the second is the label for end date. ex: [today-7, today+1] or [today-7, today] or [today]  # noqa: E501
         - label (str): Label for the date input widget. default: ""
-        - min_value (str): Minimum selectable date. accepted formats are 'today', 'today-N' or 'today+N' where N is an integer.
-        - max_value (str): Maximum selectable date. accepted formats are 'today', 'today-N' or 'today+N' where N is an integer.
+        - min_value (str): Minimum selectable date. accepted formats are 'today', 'today-N' or 'today+N' where N is an integer.  # noqa: E501
+        - max_value (str): Maximum selectable date. accepted formats are 'today', 'today-N' or 'today+N' where N is an integer.  # noqa: E501
         - help (str): Optional help text.
         - format (str): Date format string. default "YYYY/MM/DD"
-        - label_visibility (str): Visibility of the label ('visible', 'hidden', 'collapsed').
+        - label_visibility (str): Visibility of the label ('visible', 'hidden', 'collapsed').  # noqa: E501
 
 
     """
@@ -174,7 +174,7 @@ def render_json(df, config_dict):
     - config_dict (dict): Configuration dictionary containing:
         - json_column_name: Name of the column in the df that contains the JSON object to render.
         - expanded (bool): Whether the JSON should be expanded by default.
-        - width (str or int): Width of the JSON display, can be 'stretch' or an integer value.
+        - width (str or int): Width of the JSON display, can be 'stretch' or an integer value.  # noqa: E501
         - body: If json_column_name is not provided, this will be used as the JSON body to render.
     """
     logging.info("Rendering JSON with configuration: %s", config_dict)
@@ -190,10 +190,10 @@ def render_json(df, config_dict):
         body = config_dict.get("body", None)
     if body is None:
         logging.error(
-            f"widget key: {widget_uniq_key}, No JSON data provided. Please provide a valid query which returns df and specify json_column_name in config_dict, or the 'body' key in config_dict."
+            f"widget key: {widget_uniq_key}, No JSON data provided. Please provide a valid query which returns df and specify json_column_name in config_dict, or the 'body' key in config_dict."  # noqa: E501
         )
         raise ValueError(
-            "No JSON data provided. Please provide a valid query which returns df with the specified json_column_name, or the 'body' key in config_dict."
+            "No JSON data provided. Please provide a valid query which returns df with the specified json_column_name, or the 'body' key in config_dict."  # noqa: E501
         )
     logging.info("Rendering JSON with body: %s", body)
     __render_json(
@@ -212,7 +212,7 @@ def render_title(df, config_dict: dict):
         - body (str): The title text.
         - anchor (str): Optional anchor for the title.
         - help (str): Optional help text.
-    - df (Any): this will be ignored, but it is required to match the signature of other render functions.
+    - df (Any): this will be ignored, but it is required to match the signature of other render functions.  # noqa: E501
     """
     logging.info("Rendering title chart with configuration: %s", config_dict)
     st.title(
@@ -231,7 +231,7 @@ def render_text(df, config_dict: dict):
     - config_dict (dict): Configuration dictionary containing:
         - body (str): The text.
         - help (str):
-    - df (Any): this will be ignored, but it is required to match the signature of other render functions.
+    - df (Any): this will be ignored, but it is required to match the signature of other render functions.  # noqa: E501
     """
     logging.info("Rendering text chart with configuration: %s", config_dict)
     st.text(
@@ -244,7 +244,7 @@ def render_markdown(df, config_dict):
     Render markdown using Streamlit's st.markdown with configuration parameters.
 
     Parameters:
-    - df (Any): this will be ignored, but it is required to match the signature of other render functions.
+    - df (Any): this will be ignored, but it is required to match the signature of other render functions.  # noqa: E501
     - config_dict (dict): Configuration dictionary containing:
         - body (str): The markdown text to render.
         - unsafe_allow_html (bool): Whether to allow HTML in the markdown.
@@ -353,7 +353,7 @@ def render_line_chart(data, config_dict):
     - data (pd.DataFrame): The data to plot.
     - config_dict (dict): Configuration dictionary containing:
         - x (str or None): Column name for x-axis (must be in data). If None, index is used.
-        - y (str, list of str, or None): Column(s) for y-axis. If None, all columns except x are used.
+        - y (str, list of str, or None): Column(s) for y-axis. If None, all columns except x are used.  # noqa: E501
         - title (str): Optional title to display above the chart.
         - width (int): Width of the chart. 0 means default.
         - height (int): Height of the chart. 0 means default.
@@ -387,20 +387,22 @@ def __render_line_chart(
     width=0,
     height=0,
     use_container_width=True,
-    color=["#fd0"],  # noqa: E501
+    color=None,
 ):
     """
     Render a line chart using Streamlit's st.line_chart.
 
     Parameters:
     - data (pd.DataFrame): The data to plot.
-    - x (str or None): Column name to use as x-axis (must be in data). If None, index is used.
-    - y (str, list of str, or None): Column(s) to plot on y-axis. If None, all columns except x are used.
+    - x (str or None): Column name to use as x-axis (must be in data). If None, index is used.  # noqa: E501
+    - y (str, list of str, or None): Column(s) to plot on y-axis. If None, all columns except x are used.  # noqa: E501
     - title (str): Optional title to display above the chart.
     - width (int): Width of the chart. 0 means default.
     - height (int): Height of the chart. 0 means default.
     - use_container_width (bool): Whether to use the full container width.
     """
+    if color is None:
+        color = ["#fd0"]
     if title:
         st.subheader(title)
 
@@ -461,13 +463,13 @@ def render_selectbox(data, config_dict: dict):
 
     Parameters:
     - data (DataFrame): Data to be used as options in the select box.
-    the options will be taken from the specified column in config_dict using the column name specified by key 'options_column_name' in config_dict (defaults to 'options' if not specified). The value for 'options_column_name' be used as placeholder in sql query as '__<options_column_name>__'
-    If data is None, options will be taken from config_dict['options']. Optionally, data can also contain an alias column specified by 'alias_column_name' in config_dict (defaults to 'options_column_name' if not specified).
+    the options will be taken from the specified column in config_dict using the column name specified by key 'options_column_name' in config_dict (defaults to 'options' if not specified). The value for 'options_column_name' be used as placeholder in sql query as '__<options_column_name>__'  # noqa: E501
+    If data is None, options will be taken from config_dict['options']. Optionally, data can also contain an alias column specified by 'alias_column_name' in config_dict (defaults to 'options_column_name' if not specified).  # noqa: E501
     The alias column is used for display in the UI.
     if u have multiple select box, suggest to have different 'options_column_name' specified for each select box in the config_dict.
     - config_dict (dict): Configuration dictionary containing:
         - label (str): Label for the select box.
-        - options (list): List of options to display fallback in case data is None. To pick from data, the config_dict should have the key with name of df column specified as 'options_column_name'.
+        - options (list): List of options to display fallback in case data is None. To pick from data, the config_dict should have the key with name of df column specified as 'options_column_name'.  # noqa: E501
         - index (int): Default selected index.
         - format_func (callable): Function to format the displayed options.
         - key (str): Unique key for the select box widget.
@@ -478,7 +480,7 @@ def render_selectbox(data, config_dict: dict):
         - placeholder (str): Placeholder text when no option is selected.
         - disabled (bool): Whether the select box is disabled.
         - label_visibility (str): Visibility of the label ('visible', 'hidden', 'collapsed').
-        - select_box_filter_column (str): must be unique in the app. defaults to <sidebar_heading_name>_<row_idx>_<widget_idx> .This will be used as placeholder in sql query as '__<sidebar_heading_name>_<row_idx>_<widget_idx>__'
+        - select_box_filter_column (str): must be unique in the app. defaults to <sidebar_heading_name>_<row_idx>_<widget_idx> .This will be used as placeholder in sql query as '__<sidebar_heading_name>_<row_idx>_<widget_idx>__'  # noqa: E501
     """
     widget_uniq_key = config_dict["widget_uniq_key"]
     logging.info(
@@ -507,11 +509,12 @@ def render_selectbox(data, config_dict: dict):
     if AppState.get(filter_state_key_alias) is not None:
         alias_chosen = AppState.get(filter_state_key_alias)
         if alias_chosen is not None:
-            default_index = aliases.index(alias_chosen)
+            default_index = aliases.index(alias_chosen)  # noqa: F841
         else:
-            default_index = config_dict.get("index", 0)
+            default_index = config_dict.get("index", 0)  # noqa: F841
     else:
-        default_index = config_dict.get("index", 0)
+        default_index = config_dict.get("index", 0)  # noqa: F841
+    # TODO : FIX THIS # noqa: F841
 
     alias_chosen = __render_selectbox(
         label=config_dict.get("label", "Select an option"),
@@ -554,7 +557,7 @@ def render_metric(df, config_dict):
                 delta = None
     else:
         raise ValueError(
-            f"Column 'Could not get metric from Metric result DataFrame. Check query for widget: {config_dict.get('widget_uniq_key')}."
+            f"Column 'Could not get metric from Metric result DataFrame. Check query for widget: {config_dict.get('widget_uniq_key')}."  # noqa: E501
         )
     st.metric(
         label=config_dict.get("label", ""),
@@ -574,13 +577,13 @@ def render_bar_chart(data: pd.DataFrame, config_dict: dict):
     Parameters:
     - data (pd.DataFrame): The data to plot.
     - config_dict (dict): Configuration dictionary containing:
-        - x (str or None): Column name for x-axis (must be in data). If None, index is used.
+        - x (str or None): Column name for x-axis (must be in data). If None, index is used.  # noqa: E501
         - y (str, list of str, or None): Column(s) for y-axis. If None, all columns except x are used.
         - x_label (str): Label for the x-axis.
         - y_label (str): Label for the y-axis.
         - color (str, list of str, or None): Color(s) for the bars.
         - horizontal (bool): Whether to render the bars horizontally.
-        - stack (bool or str): Stacking configuration ('normalize', 'center', 'layered', None).
+        - stack (bool or str): Stacking configuration ('normalize', 'center', 'layered', None).  # noqa: E501
         - width (int): Width of the chart. 0 means default.
         - height (int): Height of the chart. 0 means default.
         - use_container_width (bool): Whether to use the full container width.
@@ -665,12 +668,14 @@ def render_pie_chart(df, config_dict):
     st.plotly_chart(fig)
 
 
-def render_map(data, config_dict: dict = {}):
+def render_map(data, config_dict: dict = None):
     """
     :param data:    DataFrame containing latitude and longitude columns.
     :param config_dict:
     :return:
     """
+    if config_dict is None:
+        config_dict = {}
     logging.info("Rendering map with configuration: %s", config_dict)
     st.map(
         data=data,
