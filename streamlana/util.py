@@ -4,7 +4,6 @@ from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
 
 import numpy as np
-import streamlit
 
 from streamlana.app_state import AppState
 
@@ -23,7 +22,7 @@ def get_date(value, zone="UTC"):
             return to_return
         except (IndexError, ValueError):
             raise ValueError(
-                "Invalid format. Use 'today' or 'today-N/today+N' where N is an integer."
+                "Invalid format. Use 'today' or 'today-N/today+N' where N is an integer."  # noqa: E501
             )
     elif "today" in value and "+" in value:
         try:
@@ -34,7 +33,7 @@ def get_date(value, zone="UTC"):
             return to_return
         except (IndexError, ValueError):
             raise ValueError(
-                "Invalid format. Use 'today' or 'today-N/today+N' where N is an integer."
+                "Invalid format. Use 'today' or 'today-N/today+N' where N is an integer."  # noqa: E501
             )
     else:
         raise ValueError("Unsupported value. Use 'today' or 'today-N' format.")
@@ -53,7 +52,7 @@ def substitute_placeholders(query):
         final_value = val
         if val is None:
             raise KeyError(
-                f"Missing key in FilterState: {key}. the widget may not have been rendered yet. Please ensure that the widget is rendered before using its value in a query."
+                f"Missing key in FilterState: {key}. the widget may not have been rendered yet. Please ensure that the widget is rendered before using its value in a query."  # noqa: E501
             )
         if isinstance(val, (list, tuple, np.ndarray)):
             final_value = tuple(val)
@@ -64,5 +63,5 @@ def substitute_placeholders(query):
         return f"{final_value}" if isinstance(final_value, str) else str(final_value)
 
     final_query = re.sub(r"__([a-zA-Z0-9_]+)__", replacer, query)
-    logging.error(f"Final query after substitution: {final_query}")
+    logging.info(f"Final query after substitution: {final_query}")
     return final_query
